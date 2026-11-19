@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#09090d">
+<title>CXRSO Browser</title>
+<style>
+:root{color-scheme:dark;--bg:#09090d;--panel:#121218;--panel2:#191921;--line:#292932;--red:#fc2651;--muted:#a2a2af;--white:#f7f7fb}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--white);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}body{display:flex;flex-direction:column;overflow:hidden}
+header{padding:14px 16px 10px;background:linear-gradient(135deg,#171018,#0d0d12 65%);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:850;letter-spacing:.06em}.eye{width:34px;height:34px;border-radius:11px;background:#fc2651;color:white;display:grid;place-items:center;font-size:19px;box-shadow:0 5px 22px #fc265133}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.18em;font-weight:700;margin-top:1px}
+.tabs{display:flex;gap:6px;overflow:auto;padding:9px 12px 0;background:#0d0d12}.tab{border:1px solid var(--line);background:#17171e;color:#c9c9d2;border-radius:9px 9px 0 0;padding:8px 12px;white-space:nowrap;max-width:190px;display:flex;gap:9px;align-items:center;cursor:pointer}.tab.active{background:var(--panel);border-bottom-color:var(--panel);color:white}.tab span:first-child{overflow:hidden;text-overflow:ellipsis}.tab .x{color:#999;font-size:17px}.newtab{border:1px solid var(--line);background:transparent;color:white;border-radius:9px;padding:6px 11px;cursor:pointer}
+.toolbar{display:flex;gap:7px;padding:11px 12px;background:var(--panel);border-bottom:1px solid var(--line);align-items:center}.tool{height:39px;min-width:39px;border:1px solid var(--line);background:var(--panel2);color:white;border-radius:10px;font-size:17px;cursor:pointer}.tool:active,.tab:active{transform:scale(.97)}.tool:disabled{opacity:.35;cursor:not-allowed}.address{height:40px;min-width:0;flex:1;border:1px solid #34343f;background:#0c0c11;border-radius:11px;color:white;padding:0 13px;font:inherit;outline:none}.address:focus{border-color:var(--red);box-shadow:0 0 0 3px #fc26511c}.go{background:var(--red);border-color:var(--red);font-size:14px;font-weight:800;padding:0 15px}
+.notice{padding:7px 13px;background:#17131a;color:#c9bfc4;border-bottom:1px solid #38232b;font-size:11px}.notice b{color:#ff7893}
+main{flex:1;min-height:0;position:relative;background:#fff}.home{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 32%,#28111a 0,#111017 48%,#09090d 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}.home h1{font-size:clamp(28px,6vw,48px);margin:0 0 8px;letter-spacing:-.04em}.home h1 em{font-style:normal;color:var(--red)}.home p{color:#b6b2bd;max-width:470px;margin:0 0 22px}.quick{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}.quick button{background:#1a1820;border:1px solid #3a3039;color:white;padding:10px 14px;border-radius:10px;cursor:pointer}.frame{display:none;border:0;width:100%;height:100%;background:white}.frame.visible{display:block}.status{font-size:11px;color:var(--muted);padding:5px 12px;background:#0d0d12;border-top:1px solid var(--line)}
+@media(max-width:560px){header{padding:11px 12px 8px}.toolbar{gap:5px;padding:9px 8px}.tool{min-width:34px;height:37px}.address{height:38px;padding:0 9px;font-size:13px}.go{padding:0 11px}.tab{padding:7px 9px;font-size:13px}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="eye">👀</div><div>CXRSO BROWSER<small>YOUR WEB VIEW</small></div></div></header>
+<nav class="tabs" id="tabs" aria-label="Browser tabs"></nav>
+<div class="toolbar">
+<button class="tool" id="back" title="Back" aria-label="Back">←</button>
+<button class="tool" id="forward" title="Forward" aria-label="Forward">→</button>
+<button class="tool" id="reload" title="Reload" aria-label="Reload">↻</button>
+<button class="tool" id="homeBtn" title="Home" aria-label="Home">⌂</button>
+<form id="navForm" style="display:flex;gap:7px;flex:1;min-width:0">
+<input class="address" id="address" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Search or enter a website address" aria-label="Search or enter a website address">
+<button class="tool go" type="submit">GO</button>
+</form>
+<button class="tool" id="newTab" title="New tab" aria-label="New tab">＋</button>
+</div>
+<div class="notice"><b>Privacy note:</b> This page is a web viewer, not an anonymity service or VPN. Your network and visited websites may still see connection information. Some sites block embedding; use “Open separately” when needed.</div>
+<main id="viewport">
+<section class="home" id="home">
+<h1>CXRSO <em>BROWSER</em></h1>
+<p>Search the web or enter a website address below. Some websites may not display inside this viewer.</p>
+<div class="quick">
+<button data-url="https://www.wikipedia.org/">Wikipedia</button>
+<button data-url="https://www.mozilla.org/">Mozilla</button>
+<button data-url="https://www.archive.org/">Internet Archive</button>
+</div>
+</section>
+<iframe class="frame" id="frame" title="Web page viewer" referrerpolicy="strict-origin-when-cross-origin" sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-downloads"></iframe>
+</main>
+<div class="status" id="status" role="status">Ready · Websites may restrict embedded viewing.</div>
+<script>
+(()=>{
+"use strict";
+const $=id=>document.getElementById(id);
+const tabsEl=$("tabs"),address=$("address"),frame=$("frame"),home=$("home"),status=$("status");
+let tabs=[],active=0,nextId=1;
+const makeTab=(url="")=>({id:nextId++,url,title:"New tab",history:[],pos:-1});
+function current(){return tabs[active]}
+function label(url){try{return new URL(url).hostname.replace(/^www\./,"")}catch{return "New tab"}}
+function renderTabs(){
+ tabsEl.replaceChildren();
+ tabs.forEach((t,i)=>{
+  const b=document.createElement("button");b.className="tab"+(i===active?" active":"");b.type="button";
+  const name=document.createElement("span");name.textContent=t.title||label(t.url);b.append(name);
+  const x=document.createElement("span");x.className="x";x.textContent="×";x.setAttribute("aria-label","Close tab");x.addEventListener("click",e=>{e.stopPropagation();closeTab(i)});b.append(x);
+  b.addEventListener("click",()=>activate(i));tabsEl.append(b);
+ });
+ const plus=document.createElement("button");plus.className="newtab";plus.textContent="＋";plus.title="New tab";plus.addEventListener("click",()=>newTab());tabsEl.append(plus);
+}
+function show(){
+ const t=current();if(!t)return;
+ const isHome=!t.url;home.style.display=isHome?"flex":"none";frame.classList.toggle("visible",!isHome);
+ address.value=t.url;renderTabs();
+ $("back").disabled=t.pos<=0;$("forward").disabled=t.pos<0||t.pos>=t.history.length-1;
+ if(isHome){frame.removeAttribute("src");status.textContent="Ready · Websites may restrict embedded viewing."}
+}
+function normalize(raw){
+ let value=raw.trim();if(!value)return "";
+ if(/^https?:\/\//i.test(value))return value;
+ if(/^(localhost|[\w-]+(\.[\w-]+)+)(:\d+)?([/?#].*)?$/i.test(value))return "https://"+value;
+ return "https://www.google.com/search?q="+encodeURIComponent(value);
+}
+function navigate(raw,push=true){
+ const url=normalize(raw);if(!url)return;
+ const t=current();if(push){t.history=t.history.slice(0,t.pos+1);t.history.push(url);t.pos=t.history.length-1}
+ t.url=url;t.title=label(url);show();frame.src=url;
+ status.textContent="Loading "+label(url)+" · If the page is blank, the site may block embedding.";
+}
+function activate(i){active=i;show();if(current().url)frame.src=current().url}
+function newTab(url=""){tabs.push(makeTab(url));active=tabs.length-1;show();if(url)navigate(url)}
+function closeTab(i){
+ if(tabs.length===1){tabs[0]=makeTab();active=0;show();return}
+ tabs.splice(i,1);if(active>=tabs.length)active=tabs.length-1;else if(i<active)active--;show();if(current().url)frame.src=current().url;
+}
+$("navForm").addEventListener("submit",e=>{e.preventDefault();navigate(address.value)});
+$("back").addEventListener("click",()=>{const t=current();if(t.pos>0){t.pos--;t.url=t.history[t.pos];show();frame.src=t.url}});
+$("forward").addEventListener("click",()=>{const t=current();if(t.pos<t.history.length-1){t.pos++;t.url=t.history[t.pos];show();frame.src=t.url}});
+$("reload").addEventListener("click",()=>{if(current().url){frame.src=current().url;status.textContent="Reloading…"}});
+$("homeBtn").addEventListener("click",()=>{current().url="";current().title="New tab";show()});
+$("newTab").addEventListener("click",()=>newTab());
+document.querySelectorAll("[data-url]").forEach(b=>b.addEventListener("click",()=>navigate(b.dataset.url)));
+frame.addEventListener("load",()=>{if(current().url)status.textContent=label(current().url)+" · Embedded page loaded (site content may still be restricted)."});
+frame.addEventListener("error",()=>{status.textContent="This site could not be displayed here. Try opening it separately."});
+tabs=[makeTab()];show();
+})();
+</script>
+</body>
+</html>
