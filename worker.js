@@ -80,7 +80,6 @@ export default {
     const router=requestRouterScript(target.href);
     return new HTMLRewriter()
       .on("head",{element(el){el.prepend(router,{html:true});}})
-      .on("html",{element(el){el.prepend(router,{html:true});}})
       .on("a",new AttributeRewriter("href",target.href,incoming.origin))
       .on("form",new AttributeRewriter("action",target.href,incoming.origin))
       .on("img",new AttributeRewriter("src",target.href,incoming.origin))
