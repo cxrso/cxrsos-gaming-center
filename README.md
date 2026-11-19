@@ -2,59 +2,47 @@
 
 🎮 CXRSO'S GAMING CENTER
 
-Your games. One destination.
+A browser-based gaming hub bringing hundreds of games together in one place.
 
-Welcome to CXRSO'S GAMING CENTER — a browser-based gaming hub featuring hundreds of games in one place.
+🌐 Play Now
 
-🌐 Website
+"Launch CXRSO'S GAMING CENTER" (https://mathlessonspart1.dpdns.org/)
 
-"Play CXRSO'S GAMING CENTER" (https://mathlessonspart1.dpdns.org/)
+✨ About the Project
 
-✨ Features
+CXRSO'S GAMING CENTER is a personal web project built to create a simple, accessible place to discover and play browser games.
 
-- 🎮 Hundreds of browser games
-- 🔎 Game browsing and search
-- ⭐ Featured game section
-- 🏷️ Game categories and filters
-- 🔄 Game sorting
-- 🖥️ In-browser game launcher
-- 📱 Simple, accessible interface
-- 🎨 Maroon, black, and white theme
+🛠️ Technology
 
-🛠️ Built With
-
-- HTML
-- CSS
+- HTML5
 - JavaScript
-- Cloudflare Pages
 - GitHub
+- Cloudflare Web Hosting
+- DigitalPlat Domain
 
-🚀 Hosting & Deployment
+🚀 Deployment
 
-This project is hosted using Cloudflare Pages and connected to GitHub.
+The website is hosted through Cloudflare Pages and connected to this GitHub repository for updates and deployments.
 
-Updates pushed to the connected repository can automatically trigger a new deployment.
+📌 Project Information
 
-📂 Project Structure
-
-CXRSOS-GAMING-CENTER/
-│
-├── index.html
-└── README.md
-
-Game information and game files are loaded from external CDN sources.
-
-🎯 Project Goal
-
-The goal of CXRSO'S GAMING CENTER is to bring a large collection of browser games together in one convenient gaming hub.
+Detail| Information
+Project| CXRSO'S GAMING CENTER
+Creator| CXRSO
+Type| Browser Gaming Hub
+Status| Active Development
+Year| 2026
 
 ❤️ Credits
 
-Created and maintained by CXRSO.
+Built and maintained by CXRSO.
 
-Thanks to the developers and creators whose games and resources make the gaming experience possible.
+Game content and resources are provided by their respective creators and sources.
 
 ---
 
-CXRSO'S GAMING CENTER © 2026
-Built for gamers. Powered by code.
+<p align="center">
+  **CXRSO'S GAMING CENTER © 2026**
+  <br>
+  *Built for gamers. Powered by code.*
+</p>
