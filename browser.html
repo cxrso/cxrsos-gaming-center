@@ -96,7 +96,7 @@ $("forward").addEventListener("click",()=>{const t=current();if(t.pos<t.history.
 $("reload").addEventListener("click",()=>{if(current().url){frame.src=current().url;status.textContent="Reloading…"}});
 $("homeBtn").addEventListener("click",()=>{current().url="";current().title="New tab";show()});
 $("newTab").addEventListener("click",()=>newTab());
-$("openExternal").addEventListener("click",()=>{const url=current().url;if(url)window.open(url,"_blank","noopener,noreferrer");else status.textContent="Enter a website address first.";});
+$("openExternal").addEventListener("click",()=>{const url=current().url;if(!url){status.textContent="Enter a website address first.";return;}const link=document.createElement("a");link.href=url;link.target="_blank";link.rel="noopener noreferrer";link.style.display="none";document.body.appendChild(link);link.click();link.remove();status.textContent="Opening "+label(url)+" directly in a new tab…";});
 document.querySelectorAll("[data-url]").forEach(b=>b.addEventListener("click",()=>navigate(b.dataset.url)));
 frame.addEventListener("load",()=>{if(current().url)status.textContent=label(current().url)+" · Embedded page loaded (site content may still be restricted)."});
 frame.addEventListener("error",()=>{status.textContent="This site could not be displayed here. Try opening it separately."});
