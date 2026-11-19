@@ -46,3 +46,11 @@ Game content and resources are provided by their respective creators and sources
   <br>
   *Built for gamers. Powered by code.*
 </p>
+
+
+
+
+--->>SITE IS SUBJECT TO CHANGE DOMAINS AT ANY TIME<<---
+
+         DOMT ASM ME IF ITS BLOCKED FOR YOU
+            I CANT POSSIBLY KNOW THAT
