@@ -1,3 +1,5 @@
+![CXRSO's Gaming Center](banner.png)
+
 🎮 CXRSO'S GAMING CENTER
 
 Your games. One destination.
