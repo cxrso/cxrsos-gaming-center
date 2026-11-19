@@ -32,11 +32,11 @@ main{flex:1;min-height:0;position:relative;background:#fff}.home{position:absolu
 <button class="tool" id="openExternal" title="Open current page separately" aria-label="Open current page separately">↗</button>
 <button class="tool" id="newTab" title="New tab" aria-label="New tab">＋</button>
 </div>
-<div class="notice"><b>Privacy note:</b> This page is a web viewer, not an anonymity service or VPN. Your network and visited websites may still see connection information. Some sites block embedding; use “Open separately” when needed.</div>
+<div class="notice"><b>Gateway mode:</b> Pages load through the CXRSO web gateway. This is not a VPN or anonymity service. Some websites may still not work, especially services requiring sign-in, DRM, or advanced browser features.</div>
 <main id="viewport">
 <section class="home" id="home">
 <h1>CXRSO <em>BROWSER</em></h1>
-<p>Search the web or enter a website address below. Some websites may not display inside this viewer.</p>
+<p>Search the web or enter a website address. Pages are routed through the CXRSO gateway to improve compatibility with embedded viewing.</p>
 <div class="quick">
 <button data-url="https://www.wikipedia.org/">Wikipedia</button>
 <button data-url="https://www.mozilla.org/">Mozilla</button>
@@ -51,6 +51,9 @@ main{flex:1;min-height:0;position:relative;background:#fff}.home{position:absolu
 "use strict";
 const $=id=>document.getElementById(id);
 const tabsEl=$("tabs"),address=$("address"),frame=$("frame"),home=$("home"),status=$("status");
+const GATEWAY_ORIGIN="https://cxrsos--browser-gateway.carsonkohler23.workers.dev";
+const gatewayUrl=url=>GATEWAY_ORIGIN+"/?url="+encodeURIComponent(url);
+const loadPage=url=>{frame.src=gatewayUrl(url)};
 let tabs=[],active=0,nextId=1;
 const makeTab=(url="")=>({id:nextId++,url,title:"New tab",history:[],pos:-1});
 function current(){return tabs[active]}
@@ -81,22 +84,22 @@ function normalize(raw){
 function navigate(raw,push=true){
  const url=normalize(raw);if(!url)return;
  const t=current();if(push){t.history=t.history.slice(0,t.pos+1);t.history.push(url);t.pos=t.history.length-1}
- t.url=url;t.title=label(url);show();frame.src=url;
+ t.url=url;t.title=label(url);show();loadPage(url);
  status.textContent="Loading "+label(url)+" · If the page is blank, the site may block embedding.";
 }
-function activate(i){active=i;show();if(current().url)frame.src=current().url}
+function activate(i){active=i;show();if(current().url)loadPage(current().url)}
 function newTab(url=""){tabs.push(makeTab(url));active=tabs.length-1;show();if(url)navigate(url)}
 function closeTab(i){
  if(tabs.length===1){tabs[0]=makeTab();active=0;show();return}
- tabs.splice(i,1);if(active>=tabs.length)active=tabs.length-1;else if(i<active)active--;show();if(current().url)frame.src=current().url;
+ tabs.splice(i,1);if(active>=tabs.length)active=tabs.length-1;else if(i<active)active--;show();if(current().url)loadPage(current().url);
 }
 $("navForm").addEventListener("submit",e=>{e.preventDefault();navigate(address.value)});
-$("back").addEventListener("click",()=>{const t=current();if(t.pos>0){t.pos--;t.url=t.history[t.pos];show();frame.src=t.url}});
-$("forward").addEventListener("click",()=>{const t=current();if(t.pos<t.history.length-1){t.pos++;t.url=t.history[t.pos];show();frame.src=t.url}});
-$("reload").addEventListener("click",()=>{if(current().url){frame.src=current().url;status.textContent="Reloading…"}});
+$("back").addEventListener("click",()=>{const t=current();if(t.pos>0){t.pos--;t.url=t.history[t.pos];show();loadPage(t.url)}});
+$("forward").addEventListener("click",()=>{const t=current();if(t.pos<t.history.length-1){t.pos++;t.url=t.history[t.pos];show();loadPage(t.url)}});
+$("reload").addEventListener("click",()=>{if(current().url){loadPage(current().url);status.textContent="Reloading…"}});
 $("homeBtn").addEventListener("click",()=>{current().url="";current().title="New tab";show()});
 $("newTab").addEventListener("click",()=>newTab());
-$("openExternal").addEventListener("click",()=>{const url=current().url;if(!url){status.textContent="Enter a website address first.";return;}const link=document.createElement("a");link.href=url;link.target="_blank";link.rel="noopener noreferrer";link.style.display="none";document.body.appendChild(link);link.click();link.remove();status.textContent="Opening "+label(url)+" directly in a new tab…";});
+$("openExternal").addEventListener("click",()=>{const url=current().url;if(!url){status.textContent="Enter a website address first.";return;}const opened=window.open(gatewayUrl(url),"_blank","noopener");status.textContent=opened?"Opening "+label(url)+" through the CXRSO gateway in a new tab…":"Pop-up blocked. Allow pop-ups to open this page separately.";});
 document.querySelectorAll("[data-url]").forEach(b=>b.addEventListener("click",()=>navigate(b.dataset.url)));
 frame.addEventListener("load",()=>{if(current().url)status.textContent=label(current().url)+" · Embedded page loaded (site content may still be restricted)."});
 frame.addEventListener("error",()=>{status.textContent="This site could not be displayed here. Try opening it separately."});
