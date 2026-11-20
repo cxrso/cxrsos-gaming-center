@@ -865,7 +865,7 @@ input,select{color:#fff}
 body{background:#09090d!important;background-image:radial-gradient(ellipse at 50% -15%,rgba(143,24,59,.22),transparent 55%)!important;color:#f6f4f6}
 header{background:rgba(10,10,15,.94)!important;border-bottom:1px solid #29232c!important;box-shadow:0 8px 35px #0008!important}
 .header-content{max-width:1440px;padding:15px 28px}
-.cxrso-brand{font-weight:950;letter-spacing:-.055em;font-size:21px}.cxrso-brand span{color:#e94c75!important}
+.cxrso-brand{font-weight:950;letter-spacing:-.055em;font-size:21px}.cxrso-brand span{color:#ff1744!important;text-shadow:0 0 14px rgba(255,23,68,.28)}
 .search-container{max-width:650px}.search-container input,.search-container select{background:#17171f!important;border:1px solid #33313c!important;color:#f6f4f6!important;border-radius:10px}
 main{max-width:1440px!important;padding:28px!important}
 #cxrso-gamehub-hero{position:relative;isolation:isolate;overflow:hidden;min-height:270px;margin:0 0 30px;padding:clamp(26px,5vw,54px);display:flex;align-items:center;border:1px solid #542238;border-radius:22px;background:radial-gradient(ellipse at 85% 20%,rgba(211,45,91,.35),transparent 38%),linear-gradient(110deg,#24101a 0%,#160e17 52%,#0e1018 100%);box-shadow:0 18px 60px #0006}
@@ -2688,6 +2688,7 @@ HTMLCanvasElement.prototype.toDataURL = function (...args) {
  $("cxrso-theme").addEventListener("change",e=>{applyTheme(e.target.value);localStorage.setItem("cxrso-hub-theme",e.target.value)});
  $("cxrso-wallpaper").addEventListener("change",e=>{["grid","glow","flat"].forEach(x=>body.classList.remove("hub-wallpaper-"+x));body.classList.add("hub-wallpaper-"+e.target.value);localStorage.setItem("cxrso-hub-wallpaper",e.target.value)});
  $("cxrso-collapse").addEventListener("click",()=>{body.classList.toggle("hub-collapsed");localStorage.setItem("cxrso-hub-collapsed",body.classList.contains("hub-collapsed")?"1":"0")});
+ if(localStorage.getItem("cxrso-hub-collapsed")===null)localStorage.setItem("cxrso-hub-collapsed","1");
  if(localStorage.getItem("cxrso-hub-collapsed")==="1"&&innerWidth>850)body.classList.add("hub-collapsed");
  $("cxrso-mobile-menu").addEventListener("click",()=>body.classList.toggle("hub-mobile-open"));
  document.addEventListener("click",e=>{if(innerWidth<=850&&body.classList.contains("hub-mobile-open")&&!e.target.closest("#cxrso-sidebar")&&!e.target.closest("#cxrso-mobile-menu"))body.classList.remove("hub-mobile-open")});
