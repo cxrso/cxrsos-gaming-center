@@ -13,6 +13,19 @@
     const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
     const stray=[];while(walker.nextNode()){if(walker.currentNode.nodeValue.trim()==="/n")stray.push(walker.currentNode);}
     stray.forEach(node=>node.parentNode&&node.parentNode.removeChild(node));
+
+    // Keep player mode in sync with the real viewer, including duplicate legacy openZone() definitions.
+    const zoneViewer=document.getElementById("zoneViewer");
+    if(zoneViewer){
+      const syncPlayerMode=()=>{
+        const open=zoneViewer.style.display!=="none" && zoneViewer.style.display!=="";
+        document.body.classList.toggle("cxrso-game-open",open);
+        if(open) document.body.classList.remove("cxrso-sidebar-mobile-open");
+      };
+      new MutationObserver(syncPlayerMode).observe(zoneViewer,{attributes:true,attributeFilter:["style","hidden"]});
+      syncPlayerMode();
+    }
+
     const nativeFilter=document.getElementById("filterOptions");
     const nativeSearch=document.getElementById("searchBar");
     const sidebar=document.createElement("aside");
