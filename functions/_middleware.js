@@ -97,7 +97,8 @@ export async function onRequest(context) {
   const secret = env.LAUNCH_PREVIEW_TOKEN;
   const cookie = request.headers.get("Cookie") || "";
   const previewCookie = cookie.split(";").map(v => v.trim()).find(v => v.startsWith(COOKIE + "="));
-  const cookieValue = previewCookie ? decodeURIComponent(previewCookie.slice(COOKIE.length + 1)) : "";
+  let cookieValue = "";
+  try { cookieValue = previewCookie ? decodeURIComponent(previewCookie.slice(COOKIE.length + 1)) : ""; } catch {}
 
   if (url.pathname === "/__preview-logout") {
     return html(page(), 200, {
