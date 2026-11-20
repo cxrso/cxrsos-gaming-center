@@ -1308,6 +1308,7 @@ function openZone(file) {
             if (file.authorLink) authorEl.href = file.authorLink;
             else authorEl.removeAttribute('href');
             zoneViewer.style.display = "block";
+            document.body.classList.add("cxrso-game-open");
             try {
                 const url = new URL(window.location);
                 url.searchParams.set('id', file.id);
@@ -1334,6 +1335,7 @@ function aboutBlank() {
 function closeZone() {
     zoneViewer.hidden = false;
     zoneViewer.style.display = "none";
+    document.body.classList.remove("cxrso-game-open");
     zoneViewer.removeChild(zoneFrame);
     try {
     const url = new URL(window.location);
