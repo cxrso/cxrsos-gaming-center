@@ -1,6 +1,6 @@
 const ARCHIVE_SEARCH="https://archive.org/advancedsearch.php";
 const ARCHIVE_META="https://archive.org/metadata/";
-const ALLOWED_COLLECTIONS=new Set(["feature_films"]);
+const ALLOWED_COLLECTIONS=new Set(["feature_films","moviesandfilms"]);
 const EDUCATION_TERMS=/\b(educational|instructional|classroom|lecture|lesson|teaching|teacher training|school film|training film|study guide|how to|demonstration|curriculum|educational television|college course|university course|science lesson|filmstrip|short film|movie trailer|trailer|newsreel|film clip|movie clip)\b/i;
 function json(data,status=200){return new Response(JSON.stringify(data),{status,headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"public, max-age=180, s-maxage=300","X-Content-Type-Options":"nosniff"}})}
 function clean(value,max=240){return String(value||"").replace(/[<>\u0000-\u001f]/g," ").replace(/\s+/g," ").trim().slice(0,max)}
@@ -36,7 +36,7 @@ export async function onRequestGet({request}){
     const safeTerm=term.replace(/[+\-&|!(){}\[\]^"~*?:\\/]/g," ").replace(/\s+/g," ").trim();
     const clauses=[
       "mediatype:movies",
-      "collection:feature_films",
+      "(collection:feature_films OR collection:moviesandfilms)",
       "NOT collection:prelinger",
       "(licenseurl:https://creativecommons.org* OR licenseurl:http://creativecommons.org*)"
     ];
@@ -49,6 +49,6 @@ export async function onRequestGet({request}){
     const data=await response.json(),docs=data.response?.docs||[];
     const verified=await Promise.all(docs.map(async doc=>doc.identifier&&isOpenLicense(doc.licenseurl)?getMetadata(doc.identifier):null));
     const movies=verified.filter(Boolean).slice(0,24);
-    return json({movies,page,total:Number(data.response?.numFound||0),source:"Internet Archive",notice:"Filtered to feature-film collections and Creative Commons-marked metadata; uploader declarations are not independent legal determinations."});
+    return json({movies,page,total:Number(data.response?.numFound||0),source:"Internet Archive",notice:"Filtered to movie collections (excluding Prelinger) and Creative Commons-marked metadata; uploader declarations are not independent legal determinations."});
   }catch{return json({error:"Could not load the movie archive right now. Please try again."},502)}
 }
