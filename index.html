@@ -21,10 +21,10 @@
     <meta name="twitter:description" content="Play unbl*cked games like Crazy Cattle 3D and DriveMad on GN-Math. Fast, free, no downloads—perfect for school or home.">
     <style>
         :root {
-    --primary: #fc2651;
-    --primary-hover: #e91e47;
-    --primary-light: rgba(252, 38, 81, 0.1);
-    --primary-lighter: rgba(252, 38, 81, 0.05);
+    --primary: #e11d2e;
+    --primary-hover: #b91c2c;
+    --primary-light: rgba(225, 29, 46, 0.1);
+    --primary-lighter: rgba(225, 29, 46, 0.05);
     --accent: #8b5cf6;
     --accent-light: rgba(139, 92, 246, 0.1);
     --success: #10b981;
@@ -44,21 +44,21 @@
     --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    --shadow-glow: 0 0 20px rgba(252, 38, 81, 0.3);
+    --shadow-glow: 0 0 20px rgba(225, 29, 46, 0.3);
     --radius: 12px;
     --radius-sm: 8px;
     --radius-lg: 16px;
     --radius-xl: 20px;
-    --gradient-primary: linear-gradient(135deg, #fc2651 0%, #e91e47 100%);
+    --gradient-primary: linear-gradient(135deg, #e11d2e 0%, #b91c2c 100%);
     --gradient-accent: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
     --gradient-surface: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
 }
 
 .dark-mode {
-    --primary: #fc2651;
-    --primary-hover: #ff4d75;
-    --primary-light: rgba(252, 38, 81, 0.15);
-    --primary-lighter: rgba(252, 38, 81, 0.08);
+    --primary: #e11d2e;
+    --primary-hover: #f04452;
+    --primary-light: rgba(225, 29, 46, 0.15);
+    --primary-lighter: rgba(225, 29, 46, 0.08);
     --accent: #a855f7;
     --accent-light: rgba(168, 85, 247, 0.15);
     --success: #34d399;
@@ -78,8 +78,8 @@
     --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.6), 0 4px 6px -4px rgb(0 0 0 / 0.6);
     --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.7), 0 8px 10px -6px rgb(0 0 0 / 0.7);
-    --shadow-glow: 0 0 20px rgba(252, 38, 81, 0.4);
-    --gradient-primary: linear-gradient(135deg, #fc2651 0%, #ff4d75 100%);
+    --shadow-glow: 0 0 20px rgba(225, 29, 46, 0.4);
+    --gradient-primary: linear-gradient(135deg, #e11d2e 0%, #f04452 100%);
     --gradient-accent: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
     --gradient-surface: linear-gradient(135deg, #1e293b 0%, #334155 100%);
 }
@@ -829,7 +829,7 @@ footer {
 }
     </style>
     <link id="gnManifest" rel="manifest" href="https://esm.sh/snoopycollegetricks@1.0.0/manifest.json">
-    <meta name="theme-color" content="#fc2651">
+    <meta name="theme-color" content="#e11d2e">
     <script>
         try {
             document.getElementById('gnManifest').href = new URL('manifest.json', location.href).href;
@@ -1595,7 +1595,7 @@ function setTheme(name) {
     document.querySelectorAll(".theme-swatch").forEach(s =>
         s.classList.toggle("active", s.dataset.themeName === name));
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute("content", getComputedStyle(document.body).getPropertyValue("--primary").trim() || "#fc2651");
+    if (meta) meta.setAttribute("content", getComputedStyle(document.body).getPropertyValue("--primary").trim() || "#e11d2e");
 }
 
 function hexToRgb(hex) {
@@ -1627,7 +1627,7 @@ function setCustomTheme(hex) {
 
 try {
     const savedTheme = localStorage.getItem("gnTheme") || "default";
-    if (savedTheme === "custom") setCustomTheme(localStorage.getItem("gnCustom") || "#fc2651");
+    if (savedTheme === "custom") setCustomTheme(localStorage.getItem("gnCustom") || "#e11d2e");
     else setTheme(savedTheme);
     const savedDark = localStorage.getItem("gnDark");
     if (savedDark === "1") document.body.classList.add("dark-mode");
@@ -1672,9 +1672,9 @@ const settings = document.getElementById('settings');
 settings.addEventListener('click', () => {
     document.getElementById('popupTitle').textContent = "Settings";
     const popupBody = document.getElementById('popupBody');
-    const swatchColors = { default:"#fc2651", ocean:"#3b82f6", emerald:"#10b981", violet:"#8b5cf6", sunset:"#f97316", rose:"#ec4899", cyan:"#06b6d4", amber:"#f59e0b", red:"#ef4444", lime:"#84cc16", teal:"#14b8a6", sky:"#0ea5e9", indigo:"#6366f1", fuchsia:"#d946ef", navy:"#172554" };
-    let current = "default", currentCustom = "#fc2651";
-    try { current = localStorage.getItem("gnTheme") || "default"; currentCustom = localStorage.getItem("gnCustom") || "#fc2651"; } catch (e) {}
+    const swatchColors = { default:"#e11d2e", ocean:"#3b82f6", emerald:"#10b981", violet:"#8b5cf6", sunset:"#f97316", rose:"#ec4899", cyan:"#06b6d4", amber:"#f59e0b", red:"#ef4444", lime:"#84cc16", teal:"#14b8a6", sky:"#0ea5e9", indigo:"#6366f1", fuchsia:"#d946ef", navy:"#172554" };
+    let current = "default", currentCustom = "#e11d2e";
+    try { current = localStorage.getItem("gnTheme") || "default"; currentCustom = localStorage.getItem("gnCustom") || "#e11d2e"; } catch (e) {}
     const swatches = THEMES.map(n =>
         `<button class="theme-swatch${n === current ? ' active' : ''}" data-theme-name="${n}" style="--sw:${swatchColors[n]}" title="${n.charAt(0).toUpperCase() + n.slice(1)}" onclick="setTheme('${n}')"></button>`
     ).join("");
@@ -2414,7 +2414,7 @@ function setTheme(name) {
     document.querySelectorAll(".theme-swatch").forEach(s =>
         s.classList.toggle("active", s.dataset.themeName === name));
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute("content", getComputedStyle(document.body).getPropertyValue("--primary").trim() || "#fc2651");
+    if (meta) meta.setAttribute("content", getComputedStyle(document.body).getPropertyValue("--primary").trim() || "#e11d2e");
 }
 
 function hexToRgb(hex) {
@@ -2446,7 +2446,7 @@ function setCustomTheme(hex) {
 
 try {
     const savedTheme = localStorage.getItem("gnTheme") || "default";
-    if (savedTheme === "custom") setCustomTheme(localStorage.getItem("gnCustom") || "#fc2651");
+    if (savedTheme === "custom") setCustomTheme(localStorage.getItem("gnCustom") || "#e11d2e");
     else setTheme(savedTheme);
     const savedDark = localStorage.getItem("gnDark");
     if (savedDark === "1") document.body.classList.add("dark-mode");
@@ -2491,9 +2491,9 @@ const settings = document.getElementById('settings');
 settings.addEventListener('click', () => {
     document.getElementById('popupTitle').textContent = "Settings";
     const popupBody = document.getElementById('popupBody');
-    const swatchColors = { default:"#fc2651", ocean:"#3b82f6", emerald:"#10b981", violet:"#8b5cf6", sunset:"#f97316", rose:"#ec4899", cyan:"#06b6d4", amber:"#f59e0b", red:"#ef4444", lime:"#84cc16", teal:"#14b8a6", sky:"#0ea5e9", indigo:"#6366f1", fuchsia:"#d946ef", navy:"#172554" };
-    let current = "default", currentCustom = "#fc2651";
-    try { current = localStorage.getItem("gnTheme") || "default"; currentCustom = localStorage.getItem("gnCustom") || "#fc2651"; } catch (e) {}
+    const swatchColors = { default:"#e11d2e", ocean:"#3b82f6", emerald:"#10b981", violet:"#8b5cf6", sunset:"#f97316", rose:"#ec4899", cyan:"#06b6d4", amber:"#f59e0b", red:"#ef4444", lime:"#84cc16", teal:"#14b8a6", sky:"#0ea5e9", indigo:"#6366f1", fuchsia:"#d946ef", navy:"#172554" };
+    let current = "default", currentCustom = "#e11d2e";
+    try { current = localStorage.getItem("gnTheme") || "default"; currentCustom = localStorage.getItem("gnCustom") || "#e11d2e"; } catch (e) {}
     const swatches = THEMES.map(n =>
         `<button class="theme-swatch${n === current ? ' active' : ''}" data-theme-name="${n}" style="--sw:${swatchColors[n]}" title="${n.charAt(0).toUpperCase() + n.slice(1)}" onclick="setTheme('${n}')"></button>`
     ).join("");
