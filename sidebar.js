@@ -9,11 +9,14 @@
   const ICONS={all:"⌂",featured:"✦",port:"🧩",tools:"🛠️",emulator:"🎮",nes:"🕹️",nds:"🎲",flash:"⚡",dos:"💾",fnf:"🎵",psx:"🎯",gba:"🎮",n64:"🟣"};
   function init(){
     if(document.getElementById("cxrso-sidebar")) return;
-    // Remove stray literal "/n" text nodes, including ones injected after startup.
+    // Remove stray newline escape markers accidentally rendered as page text.
     function removeStraySlashN(){
       const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
       const stray=[];
-      while(walker.nextNode()) if(walker.currentNode.nodeValue.trim()==="/n") stray.push(walker.currentNode);
+      while(walker.nextNode()){
+        const node=walker.currentNode;
+        if(["/n","\\n"].includes(node.nodeValue.trim())) stray.push(node);
+      }
       stray.forEach(node=>node.parentNode&&node.parentNode.removeChild(node));
     }
     removeStraySlashN();
