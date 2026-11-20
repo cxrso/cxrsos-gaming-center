@@ -1,7 +1,7 @@
 const ARCHIVE_SEARCH="https://archive.org/advancedsearch.php";
 const ARCHIVE_META="https://archive.org/metadata/";
 const ALLOWED_COLLECTIONS=new Set(["feature_films"]);
-const EDUCATION_TERMS=/\b(educational|instructional|classroom|lecture|lesson|teaching|teacher training|school film|training film|study guide|how to|demonstration|curriculum|educational television|college course|university course|science lesson|filmstrip)\b/i;
+const EDUCATION_TERMS=/\b(educational|instructional|classroom|lecture|lesson|teaching|teacher training|school film|training film|study guide|how to|demonstration|curriculum|educational television|college course|university course|science lesson|filmstrip|short film|movie trailer|trailer|newsreel|film clip|movie clip)\b/i;
 function json(data,status=200){return new Response(JSON.stringify(data),{status,headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"public, max-age=180, s-maxage=300","X-Content-Type-Options":"nosniff"}})}
 function clean(value,max=240){return String(value||"").replace(/[<>\u0000-\u001f]/g," ").replace(/\s+/g," ").trim().slice(0,max)}
 function isOpenLicense(value){try{const url=new URL(String(value||""));return url.hostname==="creativecommons.org"||url.hostname==="www.creativecommons.org"}catch{return false}}
