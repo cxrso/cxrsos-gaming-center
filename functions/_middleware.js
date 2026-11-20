@@ -1,6 +1,5 @@
 const LAUNCH_AT = Date.parse("2026-11-30T05:00:00.000Z"); // 12:00 AM Eastern Time
 const COOKIE = "__Host-cxrso-preview";
-const COOKIE_AGE = 60 * 60 * 24 * 30;
 
 function sameSecret(a, b) {
   if (typeof a !== "string" || typeof b !== "string" || a.length !== b.length) return false;
@@ -119,7 +118,7 @@ export async function onRequest(context) {
         headers: {
           "Location": "/",
           "Cache-Control": "no-store",
-          "Set-Cookie": COOKIE + "=" + encodeURIComponent(secret) + "; Path=/; Max-Age=" + COOKIE_AGE + "; Secure; HttpOnly; SameSite=Strict"
+          "Set-Cookie": COOKIE + "=" + encodeURIComponent(secret) + "; Path=/; Secure; HttpOnly; SameSite=Strict"
         }
       });
     }
