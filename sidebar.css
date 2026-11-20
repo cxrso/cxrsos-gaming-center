@@ -12,7 +12,7 @@
 #cxrso-sidebar .cxrso-side-nav{display:flex;flex-direction:column;gap:4px;overflow:auto;scrollbar-width:thin}
 #cxrso-sidebar .cxrso-side-link{width:100%;min-height:42px;display:flex;align-items:center;gap:12px;padding:8px 10px;border:1px solid transparent;border-radius:11px;background:transparent;text-align:left;color:var(--cxrso-side-text);font-size:13px;font-weight:650;transition:background .15s,border-color .15s}
 #cxrso-sidebar .cxrso-side-link:hover{background:rgba(255,255,255,.07);border-color:var(--cxrso-side-border)}
-#cxrso-sidebar .cxrso-side-link[aria-current=true]{background:rgba(224,0,43,.16);border-color:rgba(255,24,56,.34)}
+#cxrso-sidebar .cxrso-side-link[aria-current="page"]{background:rgba(224,0,43,.16);border-color:rgba(255,24,56,.34)}
 #cxrso-sidebar .cxrso-side-icon{width:24px;flex:0 0 24px;text-align:center;font-size:17px}
 #cxrso-sidebar .cxrso-side-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #cxrso-sidebar .cxrso-side-count{margin-left:auto;color:var(--cxrso-side-muted);font-size:11px}
@@ -40,7 +40,7 @@ body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-side-link{justify-content:cen
 /* Stage 2 — appearance themes and background presets */
 #cxrso-sidebar{background:var(--cxrso-panel-bg,rgba(17,16,20,.96));border-color:var(--cxrso-side-border);color:var(--cxrso-side-text)}
 #cxrso-sidebar .cxrso-side-brand span{color:var(--cxrso-side-accent)}
-#cxrso-sidebar .cxrso-side-link[aria-current=true]{background:color-mix(in srgb,var(--cxrso-side-accent) 17%,transparent);border-color:color-mix(in srgb,var(--cxrso-side-accent) 40%,transparent)}
+#cxrso-sidebar .cxrso-side-link[aria-current="page"]{background:color-mix(in srgb,var(--cxrso-side-accent) 17%,transparent);border-color:color-mix(in srgb,var(--cxrso-side-accent) 40%,transparent)}
 #cxrso-sidebar .cxrso-side-toggle,#cxrso-side-mobile{background:var(--cxrso-control-bg,#211c21);border-color:var(--cxrso-side-border)}
 #cxrso-sidebar .cxrso-appearance{display:grid;grid-template-columns:1fr;gap:7px;padding:0 8px}
 #cxrso-sidebar .cxrso-appearance label{display:block;color:var(--cxrso-side-muted);font-size:11px;font-weight:700}
@@ -58,3 +58,17 @@ body[data-cxrso-wallpaper="clean"]{background-image:none}
 body[data-cxrso-wallpaper="ambient"],body[data-cxrso-wallpaper="grid"],body[data-cxrso-wallpaper="clean"]{background-attachment:fixed}
 body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-appearance{display:none}
 @media(max-width:800px){body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-appearance{display:grid}}
+
+/* Stage 4 — keyboard focus and reduced-motion support */
+#cxrso-sidebar button:focus-visible,#cxrso-side-mobile:focus-visible{
+  outline:2px solid var(--cxrso-side-accent);
+  outline-offset:3px;
+}
+#cxrso-sidebar .cxrso-side-link:focus-visible{
+  background:color-mix(in srgb,var(--cxrso-side-accent) 14%,transparent);
+}
+@media(prefers-reduced-motion:reduce){
+  #cxrso-sidebar,body.cxrso-sidebar-expanded main,body.cxrso-sidebar-collapsed main,
+  #cxrso-sidebar .cxrso-side-link{transition:none!important}
+  #cxrso-sidebar .cxrso-side-link:hover{transform:none}
+}
