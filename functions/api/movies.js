@@ -1,6 +1,6 @@
 const ARCHIVE_SEARCH="https://archive.org/advancedsearch.php";
 const ARCHIVE_META="https://archive.org/metadata/";
-const ALLOWED_COLLECTIONS=new Set(["feature_films","moviesandfilms"]);
+const ALLOWED_COLLECTIONS=new Set(["feature_films"]);
 const EDUCATION_TERMS=/\b(educational|instructional|classroom|lecture|lesson|teaching|teacher training|school film|training film|study guide|how to|demonstration|curriculum|educational television|college course|university course|science lesson|filmstrip)\b/i;
 function json(data,status=200){return new Response(JSON.stringify(data),{status,headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"public, max-age=180, s-maxage=300","X-Content-Type-Options":"nosniff"}})}
 function clean(value,max=240){return String(value||"").replace(/[<>\u0000-\u001f]/g," ").replace(/\s+/g," ").trim().slice(0,max)}
@@ -36,14 +36,14 @@ export async function onRequestGet({request}){
     const safeTerm=term.replace(/[+\-&|!(){}\[\]^"~*?:\\/]/g," ").replace(/\s+/g," ").trim();
     const clauses=[
       "mediatype:movies",
-      "(collection:feature_films OR collection:moviesandfilms)",
+      "collection:feature_films",
       "NOT collection:prelinger",
       "(licenseurl:https://creativecommons.org* OR licenseurl:http://creativecommons.org*)"
     ];
     if(safeTerm)clauses.push("title:("+safeTerm.split(" ").map(word=>'"'+word+'"').join(" AND ")+")");
     const searchUrl=new URL(ARCHIVE_SEARCH);searchUrl.searchParams.set("q",clauses.join(" AND "));
     for(const field of ["identifier","title","year","creator","licenseurl"])searchUrl.searchParams.append("fl[]",field);
-    searchUrl.searchParams.set("rows","48");searchUrl.searchParams.set("page",String(page));searchUrl.searchParams.set("output","json");searchUrl.searchParams.set("sort[]","downloads desc");
+    searchUrl.searchParams.set("rows","24");searchUrl.searchParams.set("page",String(page));searchUrl.searchParams.set("output","json");searchUrl.searchParams.set("sort[]","downloads desc");
     const response=await fetch(searchUrl,{headers:{Accept:"application/json"}});
     if(!response.ok)return json({error:"The movie archive is temporarily unavailable. Try again shortly."},502);
     const data=await response.json(),docs=data.response?.docs||[];
