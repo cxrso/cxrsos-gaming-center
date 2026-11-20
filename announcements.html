@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090909">
+  <title>Announcements | CXRSO Gaming Center</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:#090909;color:#f5f5f5;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+    header{padding:24px max(20px,calc((100vw - 850px)/2));background:#111;border-bottom:1px solid #5a1830}
+    .brand{font-size:13px;letter-spacing:.14em;font-weight:800;color:#ff557e;text-transform:uppercase}
+    h1{margin:8px 0 0;font-size:clamp(27px,5vw,42px)}
+    main{width:min(850px,calc(100% - 32px));margin:30px auto 70px}
+    .back{display:inline-block;margin-bottom:22px;color:#ff8aa7;text-decoration:none;font-weight:700}
+    .back:hover{text-decoration:underline}
+    #cxrso-announcements-list{display:grid;gap:15px}
+    .announcement{padding:20px;border:1px solid #542238;border-radius:16px;background:linear-gradient(145deg,#1b1016,#100b0e)}
+    .meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center;color:#d9a9b9;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+    .meta span{padding:4px 9px;border:1px solid #80334f;border-radius:999px;color:#ffb4c8}
+    h2{margin:12px 0 7px;font-size:21px}
+    .announcement p{margin:0;color:#d5c4ca;line-height:1.65}
+    .empty{padding:24px;text-align:center;color:#c5a8b4}
+  </style>
+</head>
+<body>
+  <header><div class="brand">CXRSO'S GAMING CENTER</div><h1>📢 Announcements</h1></header>
+  <main>
+    <a class="back" href="/">← Back to Gaming Center</a>
+    <div id="cxrso-announcements-list" aria-live="polite"><p class="empty">Loading announcements…</p></div>
+  </main>
+  <script src="/announcements-page.js" defer></script>
+</body>
+</html>
