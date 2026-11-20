@@ -73,25 +73,32 @@ body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-appearance{display:none}
   #cxrso-sidebar .cxrso-side-link:hover{transform:none}
 }
 
-/* Game player mode — keep the play area clear and theme its title bar + controls. */
+
+/* Game player mode — authoritative player header theme and sidebar dismissal. */
 body.cxrso-game-open #cxrso-sidebar,
-body.cxrso-game-open #cxrso-side-mobile{display:none!important}
-body.cxrso-game-open main{margin-left:auto!important}
+body.cxrso-game-open #cxrso-side-mobile{display:none!important;visibility:hidden!important;pointer-events:none!important}
+body.cxrso-game-open main{margin-left:0!important}
+#zoneViewer .zone-header,
 .zone-header{
-  background:linear-gradient(115deg,
-    color-mix(in srgb,var(--cxrso-side-accent,#e0002b) 72%,#09090d),
-    var(--cxrso-side-accent,#e0002b))!important;
+  background:linear-gradient(115deg,#09090d 0%,var(--cxrso-side-accent,#ff1838) 100%)!important;
+  background-color:var(--cxrso-side-accent,#ff1838)!important;
   color:#fff!important;
-  border-bottom:1px solid color-mix(in srgb,var(--cxrso-side-accent,#e0002b) 65%,#fff)!important;
-  box-shadow:0 8px 28px color-mix(in srgb,var(--cxrso-side-accent,#e0002b) 24%,transparent)!important;
+  border-bottom:2px solid var(--cxrso-side-accent,#ff1838)!important;
+  box-shadow:0 8px 28px color-mix(in srgb,var(--cxrso-side-accent,#ff1838) 32%,transparent)!important;
 }
-.zone-header #zoneName,.zone-header #zoneAuthor,.zone-header .info-button,
-.zone-header .zone-controls button{color:#fff!important}
-.zone-header #zoneAuthor{opacity:.86}
+#zoneViewer .zone-header #zoneName,
+#zoneViewer .zone-header #zoneAuthor,
+#zoneViewer .zone-header button,
+.zone-header #zoneName,.zone-header #zoneAuthor,
 .zone-header .info-button,.zone-header .zone-controls button{
-  background:color-mix(in srgb,var(--cxrso-side-accent,#e0002b) 28%,#111)!important;
-  border:1px solid color-mix(in srgb,var(--cxrso-side-accent,#e0002b) 65%,#fff)!important;
+  color:#fff!important;
 }
+#zoneViewer .zone-header button,
+.zone-header .info-button,.zone-header .zone-controls button{
+  background:color-mix(in srgb,var(--cxrso-side-accent,#ff1838) 32%,#111)!important;
+  border:1px solid color-mix(in srgb,var(--cxrso-side-accent,#ff1838) 72%,#fff)!important;
+}
+#zoneViewer .zone-header button:hover,
 .zone-header .info-button:hover,.zone-header .zone-controls button:hover{
-  background:color-mix(in srgb,var(--cxrso-side-accent,#e0002b) 48%,#111)!important;
+  background:color-mix(in srgb,var(--cxrso-side-accent,#ff1838) 58%,#111)!important;
 }
