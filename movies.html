@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#160609">
+<title>CXRSO Movies</title>
+<style>
+:root{color-scheme:dark;--red:#e11d2e;--red2:#a90f25;--panel:#171014;--muted:#b9aab0}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 0,rgba(180,18,42,.2),transparent 48%),#09080b;color:#f8f5f6;font:15px/1.55 Inter,system-ui,sans-serif}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px clamp(18px,5vw,64px);border-bottom:1px solid #ffffff14}
+.brand{font-weight:950;letter-spacing:.1em}.brand span{color:#ff3047}
+.back{color:#ff6577;text-decoration:none;font-weight:700}
+main{width:min(1120px,calc(100% - 36px));margin:42px auto 70px}
+.eyebrow{color:#ff5266;font-size:11px;font-weight:900;letter-spacing:.18em;text-transform:uppercase}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.05;margin:8px 0}
+.intro{max-width:700px;color:var(--muted);margin:12px 0 30px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:16px}
+.card{display:flex;flex-direction:column;min-height:230px;padding:22px;border:1px solid #ffffff18;border-radius:18px;background:linear-gradient(145deg,#1b1116,#100d11);box-shadow:0 18px 50px #0005}
+.icon{font-size:30px}.tag{margin-top:12px;color:#ff7181;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+h2{font-size:21px;margin:6px 0}.desc{color:var(--muted);font-size:13px;flex:1}
+.action{display:inline-flex;justify-content:center;align-items:center;margin-top:18px;padding:11px 15px;border-radius:10px;background:linear-gradient(135deg,var(--red),var(--red2));color:white;text-decoration:none;font-weight:800}
+.note{margin-top:28px;padding:16px 18px;border:1px solid #ffffff18;border-radius:14px;color:var(--muted);font-size:12px}
+footer{padding:20px;text-align:center;color:#85777d;font-size:11px}
+</style>
+</head>
+<body>
+<header><div class="brand">CXRSO <span>MOVIES</span></div><a class="back" href="/">← Back to Game Center</a></header>
+<main>
+<div class="eyebrow">Entertainment library</div>
+<h1>Find something to watch.</h1>
+<p class="intro">Browse free movie and TV catalogs from established streaming services. Pick a provider to open its official library and watch what is currently available in your region.</p>
+<section class="grid" aria-label="Movie and TV streaming services">
+<article class="card"><div class="icon">🍿</div><div class="tag">Large on-demand catalog</div><h2>Tubi</h2><p class="desc">A broad free, ad-supported collection of movies, TV series, and originals. Catalog availability changes by region.</p><a class="action" href="https://tubitv.com/" target="_blank" rel="noopener noreferrer">Browse Tubi ↗</a></article>
+<article class="card"><div class="icon">📺</div><div class="tag">On-demand + live TV</div><h2>Plex</h2><p class="desc">Free ad-supported movies, shows, and live channels, alongside Plex's personal media features.</p><a class="action" href="https://watch.plex.tv/" target="_blank" rel="noopener noreferrer">Browse Plex ↗</a></article>
+<article class="card"><div class="icon">🛰️</div><div class="tag">Live channels + movies</div><h2>Pluto TV</h2><p class="desc">Free streaming channels and an on-demand movie and television library.</p><a class="action" href="https://pluto.tv/" target="_blank" rel="noopener noreferrer">Browse Pluto TV ↗</a></article>
+<article class="card"><div class="icon">📡</div><div class="tag">Movies + live channels</div><h2>The Roku Channel</h2><p class="desc">Free movies, series, and live channels on the web; a Roku device is not required for web viewing in supported regions.</p><a class="action" href="https://therokuchannel.roku.com/" target="_blank" rel="noopener noreferrer">Browse Roku Channel ↗</a></article>
+<article class="card"><div class="icon">🎓</div><div class="tag">Library access</div><h2>Kanopy</h2><p class="desc">Films, documentaries, and independent cinema at no direct cost when your library or university participates.</p><a class="action" href="https://www.kanopy.com/" target="_blank" rel="noopener noreferrer">Check Kanopy ↗</a></article>
+<article class="card"><div class="icon">📚</div><div class="tag">Library access</div><h2>hoopla</h2><p class="desc">Borrow movies and TV through participating public libraries using an eligible library card.</p><a class="action" href="https://www.hoopladigital.com/" target="_blank" rel="noopener noreferrer">Check hoopla ↗</a></article>
+<article class="card"><div class="icon">🎞️</div><div class="tag">Public-domain classics</div><h2>Internet Archive</h2><p class="desc">A huge moving-image archive. Rights vary by item, so use titles clearly marked public domain or openly licensed.</p><a class="action" href="https://archive.org/details/movies" target="_blank" rel="noopener noreferrer">Explore Archive ↗</a></article>
+</section>
+<div class="note">CXRSO links to the providers' official websites. Streaming catalogs, free tiers, ads, library eligibility, and regional availability are controlled by each provider. CXRSO does not host or re-upload their films.</div>
+</main>
+<footer>© CXRSO'S GAMING CENTER · MOVIES</footer>
+</body>
+</html>
