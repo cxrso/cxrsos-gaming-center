@@ -38,8 +38,10 @@
       const button=e.target.closest(".cxrso-side-link");if(!button)return;markActive(button);
       if(button.dataset.action==="featured"){const featured=document.getElementById("featuredZonesWrapper");if(featured){featured.open=true;featured.scrollIntoView({behavior:"smooth",block:"start"});}document.body.classList.remove("cxrso-sidebar-mobile-open");return;}
       if(!nativeFilter||!nativeSearch)return;
-      nativeSearch.value="";nativeFilter.value="none";nativeFilter.dispatchEvent(new Event("change",{bubbles:true}));
-      if(button.dataset.tag){nativeFilter.value=button.dataset.tag;nativeFilter.dispatchEvent(new Event("change",{bubbles:true}));}
+      nativeSearch.value="";
+      nativeSearch.dispatchEvent(new Event("input",{bubbles:true}));
+      nativeFilter.value=button.dataset.tag||"none";
+      nativeFilter.dispatchEvent(new Event("change",{bubbles:true}));
       const all=document.getElementById("allZonesWrapper");if(all){all.open=true;all.scrollIntoView({behavior:"smooth",block:"start"});}
       document.body.classList.remove("cxrso-sidebar-mobile-open");
     });
@@ -50,16 +52,37 @@
       if(!options.length){categoryNav.innerHTML='<div class="cxrso-side-empty">Categories will appear when the game list loads.</div>';return;}
       const current=new Set(Array.from(categoryNav.querySelectorAll("[data-tag]")).map(b=>b.dataset.tag));
       const next=new Set(options.map(o=>o.value));
-      if(current.size===next.size&&Array.from(next).every(v=>current.has(v)))return;
+      if(current.size===next.size&&Array.from(next).every(v=>current.has(v))){refreshCounts();return;}
       categoryNav.innerHTML="";
       options.forEach(option=>{
         const b=document.createElement("button");b.type="button";b.className="cxrso-side-link";b.dataset.tag=option.value;
         const icon=document.createElement("span");icon.className="cxrso-side-icon";icon.textContent=ICONS[option.value]||"◈";
         const name=document.createElement("span");name.className="cxrso-side-name";name.textContent=option.textContent||option.value;
-        b.append(icon,name);categoryNav.appendChild(b);
+        const count=document.createElement("span");count.className="cxrso-side-count";count.dataset.countFor=option.value;count.textContent="—";
+        b.append(icon,name,count);categoryNav.appendChild(b);
+      });
+      refreshCounts();
+    }
+    function refreshCounts(){
+      if(!nativeFilter)return;
+      const cards=Array.from(document.querySelectorAll(".zone-item"));
+      const counts=new Map();
+      cards.forEach(card=>{
+        const raw=card.dataset.tags||card.dataset.tag||card.getAttribute("data-tags")||"";
+        raw.split(/[ ,]+/).filter(Boolean).forEach(tag=>counts.set(tag,(counts.get(tag)||0)+1));
+      });
+      categoryNav.querySelectorAll("[data-count-for]").forEach(el=>{
+        const n=counts.get(el.dataset.countFor);
+        el.textContent=n===undefined?"":String(n);
       });
     }
-    if(nativeFilter){new MutationObserver(syncCategories).observe(nativeFilter,{childList:true});syncCategories();}
+    if(nativeFilter){
+      new MutationObserver(syncCategories).observe(nativeFilter,{childList:true,subtree:true,attributes:true});
+      syncCategories();
+      const gameContainer=document.getElementById("container");
+      if(gameContainer)new MutationObserver(refreshCounts).observe(gameContainer,{childList:true,subtree:true,attributes:true,attributeFilter:["data-tags","data-tag"]});
+      refreshCounts();
+    }
     window.addEventListener("storage",e=>{if(e.key===KEY)setCollapsed(e.newValue!=="false");if(e.key===THEME_KEY)applyTheme(e.newValue,false);if(e.key===WALL_KEY)applyWallpaper(e.newValue,false);});
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
