@@ -9,6 +9,10 @@
   const ICONS={all:"⌂",featured:"✦",port:"🧩",tools:"🛠️",emulator:"🎮",nes:"🕹️",nds:"🎲",flash:"⚡",dos:"💾",fnf:"🎵",psx:"🎯",gba:"🎮",n64:"🟣"};
   function init(){
     if(document.getElementById("cxrso-sidebar")) return;
+    // Remove an accidental standalone slash-n text node if one is present.
+    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+    const stray=[];while(walker.nextNode()){if(walker.currentNode.nodeValue.trim()==="/n")stray.push(walker.currentNode);}
+    stray.forEach(node=>node.parentNode&&node.parentNode.removeChild(node));
     const nativeFilter=document.getElementById("filterOptions");
     const nativeSearch=document.getElementById("searchBar");
     const sidebar=document.createElement("aside");
