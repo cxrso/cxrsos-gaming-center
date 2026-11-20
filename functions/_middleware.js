@@ -41,7 +41,7 @@ small{display:block;margin-top:18px;color:#987b88}
 <main>
 <div class="logo">🎮</div>
 <div class="eyebrow">CXRSO Gaming Center</div>
-<h1>Something big is loading.</h1>
+<h1>Something big is coming.</h1>
 <p>We're putting the finishing touches on the games, browser, and the experience. The doors open to everyone on launch day.</p>
 <div class="date">November 30, 2026 · 12:00 AM Eastern</div>
 <div id="countdown" aria-label="Countdown">
