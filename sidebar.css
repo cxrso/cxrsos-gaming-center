@@ -1,0 +1,74 @@
+/* CXRSO sidebar rebuild — Stage 1: isolated layout and navigation */
+:root{--cxrso-side-width:252px;--cxrso-side-collapsed:76px;--cxrso-side-bg:#111014;--cxrso-side-border:rgba(255,255,255,.09);--cxrso-side-text:#f4f1f3;--cxrso-side-muted:#aaa2a8;--cxrso-side-accent:#e0002b}
+#cxrso-sidebar{position:fixed;z-index:9000;left:14px;top:108px;bottom:16px;width:var(--cxrso-side-width);box-sizing:border-box;padding:16px 12px;background:rgba(17,16,20,.96);border:1px solid var(--cxrso-side-border);border-radius:18px;color:var(--cxrso-side-text);box-shadow:0 18px 55px rgba(0,0,0,.38);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;flex-direction:column;gap:14px;transition:width .22s ease,transform .22s ease}
+#cxrso-sidebar *{box-sizing:border-box}
+#cxrso-sidebar .cxrso-side-head{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:38px}
+#cxrso-sidebar .cxrso-side-brand{font-size:13px;font-weight:900;letter-spacing:.09em;white-space:nowrap;overflow:hidden}
+#cxrso-sidebar .cxrso-side-brand span{color:#ff1838}
+#cxrso-sidebar button{font:inherit;color:inherit;cursor:pointer}
+#cxrso-sidebar .cxrso-side-toggle,#cxrso-side-mobile{border:1px solid var(--cxrso-side-border);background:#211c21;border-radius:10px;width:36px;height:36px;display:grid;place-items:center;font-size:18px;flex:0 0 auto}
+#cxrso-sidebar .cxrso-side-section{display:flex;flex-direction:column;gap:6px;min-height:0}
+#cxrso-sidebar .cxrso-side-label{padding:4px 10px;color:var(--cxrso-side-muted);font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+#cxrso-sidebar .cxrso-side-nav{display:flex;flex-direction:column;gap:4px;overflow:auto;scrollbar-width:thin}
+#cxrso-sidebar .cxrso-side-link{width:100%;min-height:42px;display:flex;align-items:center;gap:12px;padding:8px 10px;border:1px solid transparent;border-radius:11px;background:transparent;text-align:left;color:var(--cxrso-side-text);font-size:13px;font-weight:650;transition:background .15s,border-color .15s}
+#cxrso-sidebar .cxrso-side-link:hover{background:rgba(255,255,255,.07);border-color:var(--cxrso-side-border)}
+#cxrso-sidebar .cxrso-side-link[aria-current="page"]{background:rgba(224,0,43,.16);border-color:rgba(255,24,56,.34)}
+#cxrso-sidebar .cxrso-side-icon{width:24px;flex:0 0 24px;text-align:center;font-size:17px}
+#cxrso-sidebar .cxrso-side-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#cxrso-sidebar .cxrso-side-count{margin-left:auto;color:var(--cxrso-side-muted);font-size:11px}
+#cxrso-sidebar .cxrso-side-empty{padding:10px;color:var(--cxrso-side-muted);font-size:12px}
+#cxrso-sidebar .cxrso-side-footer{margin-top:auto;padding-top:10px;border-top:1px solid var(--cxrso-side-border);color:var(--cxrso-side-muted);font-size:11px}
+body.cxrso-sidebar-expanded main{margin-left:calc(var(--cxrso-side-width) + 28px);transition:margin-left .22s ease}
+body.cxrso-sidebar-collapsed main{margin-left:calc(var(--cxrso-side-collapsed) + 28px);transition:margin-left .22s ease}
+body.cxrso-sidebar-collapsed #cxrso-sidebar{width:var(--cxrso-side-collapsed);padding-inline:10px}
+body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-side-brand,body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-side-label,body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-side-name,body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-side-count,body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-side-footer{display:none}
+body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-side-head{justify-content:center}
+body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-side-link{justify-content:center;padding-inline:4px}
+#cxrso-side-mobile{display:none;position:fixed;z-index:9001;left:14px;top:108px;background:#171317;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+@media(max-width:800px){
+ body.cxrso-sidebar-expanded main,body.cxrso-sidebar-collapsed main{margin-left:0}
+ #cxrso-sidebar{top:0;left:0;bottom:0;width:min(290px,86vw);border-radius:0 18px 18px 0;transform:translateX(-110%);z-index:10001}
+ body.cxrso-sidebar-mobile-open #cxrso-sidebar{transform:translateX(0)}
+ body.cxrso-sidebar-mobile-open:after{content:"";position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:10000}
+ #cxrso-side-mobile{display:grid}
+ body.cxrso-sidebar-collapsed #cxrso-sidebar{width:min(290px,86vw)}
+ body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-side-brand,body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-side-label,body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-side-name,body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-side-count,body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-side-footer{display:initial}
+ body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-side-head{justify-content:space-between}
+ body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-side-link{justify-content:flex-start;padding:8px 10px}
+}
+
+/* Stage 2 — appearance themes and background presets */
+#cxrso-sidebar{background:var(--cxrso-panel-bg,rgba(17,16,20,.96));border-color:var(--cxrso-side-border);color:var(--cxrso-side-text)}
+#cxrso-sidebar .cxrso-side-brand span{color:var(--cxrso-side-accent)}
+#cxrso-sidebar .cxrso-side-link[aria-current="page"]{background:color-mix(in srgb,var(--cxrso-side-accent) 17%,transparent);border-color:color-mix(in srgb,var(--cxrso-side-accent) 40%,transparent)}
+#cxrso-sidebar .cxrso-side-toggle,#cxrso-side-mobile{background:var(--cxrso-control-bg,#211c21);border-color:var(--cxrso-side-border)}
+#cxrso-sidebar .cxrso-appearance{display:grid;grid-template-columns:1fr;gap:7px;padding:0 8px}
+#cxrso-sidebar .cxrso-appearance label{display:block;color:var(--cxrso-side-muted);font-size:11px;font-weight:700}
+#cxrso-sidebar .cxrso-appearance select{width:100%;min-width:0;padding:9px 10px;border:1px solid var(--cxrso-side-border);border-radius:9px;background:var(--cxrso-control-bg,#211c21);color:var(--cxrso-side-text);font:inherit;font-size:12px;outline-offset:2px}
+#cxrso-sidebar .cxrso-appearance select:focus-visible{outline:2px solid var(--cxrso-side-accent)}
+body[data-cxrso-theme="ocean"]{--cxrso-side-accent:#36a9ff;--cxrso-side-border:rgba(80,170,255,.22);--cxrso-side-muted:#a6b8c8;--cxrso-control-bg:#142331}
+body[data-cxrso-theme="violet"]{--cxrso-side-accent:#a879ff;--cxrso-side-border:rgba(168,121,255,.22);--cxrso-side-muted:#b9accd;--cxrso-control-bg:#211a30}
+body[data-cxrso-theme="green"]{--cxrso-side-accent:#35d07f;--cxrso-side-border:rgba(53,208,127,.22);--cxrso-side-muted:#a9c8b5;--cxrso-control-bg:#14271e}
+body[data-cxrso-theme="orange"]{--cxrso-side-accent:#ff9d42;--cxrso-side-border:rgba(255,157,66,.23);--cxrso-side-muted:#d0b49a;--cxrso-control-bg:#2b2017}
+body[data-cxrso-theme="pink"]{--cxrso-side-accent:#ff5db7;--cxrso-side-border:rgba(255,93,183,.22);--cxrso-side-muted:#d2a9c2;--cxrso-control-bg:#2a1925}
+body[data-cxrso-theme="maroon"]{--cxrso-side-accent:#ff1838;--cxrso-side-border:rgba(255,24,56,.2);--cxrso-side-muted:#aaa2a8;--cxrso-control-bg:#211c21}
+body[data-cxrso-wallpaper="ambient"]{background-image:radial-gradient(ellipse at 18% 8%,rgba(128,0,32,.20),transparent 48%),radial-gradient(ellipse at 85% 75%,rgba(80,15,35,.13),transparent 45%)}
+body[data-cxrso-wallpaper="grid"]{background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:34px 34px}
+body[data-cxrso-wallpaper="clean"]{background-image:none}
+body[data-cxrso-wallpaper="ambient"],body[data-cxrso-wallpaper="grid"],body[data-cxrso-wallpaper="clean"]{background-attachment:fixed}
+body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-appearance{display:none}
+@media(max-width:800px){body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-appearance{display:grid}}
+
+/* Stage 4 — keyboard focus and reduced-motion support */
+#cxrso-sidebar button:focus-visible,#cxrso-side-mobile:focus-visible{
+  outline:2px solid var(--cxrso-side-accent);
+  outline-offset:3px;
+}
+#cxrso-sidebar .cxrso-side-link:focus-visible{
+  background:color-mix(in srgb,var(--cxrso-side-accent) 14%,transparent);
+}
+@media(prefers-reduced-motion:reduce){
+  #cxrso-sidebar,body.cxrso-sidebar-expanded main,body.cxrso-sidebar-collapsed main,
+  #cxrso-sidebar .cxrso-side-link{transition:none!important}
+  #cxrso-sidebar .cxrso-side-link:hover{transform:none}
+}
