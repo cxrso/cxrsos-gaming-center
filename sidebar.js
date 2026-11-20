@@ -58,23 +58,13 @@
         const b=document.createElement("button");b.type="button";b.className="cxrso-side-link";b.dataset.tag=option.value;
         const icon=document.createElement("span");icon.className="cxrso-side-icon";icon.textContent=ICONS[option.value]||"◈";
         const name=document.createElement("span");name.className="cxrso-side-name";name.textContent=option.textContent||option.value;
-        const count=document.createElement("span");count.className="cxrso-side-count";count.dataset.countFor=option.value;count.textContent="—";
-        b.append(icon,name,count);categoryNav.appendChild(b);
+        b.append(icon,name);categoryNav.appendChild(b);
       });
       refreshCounts();
     }
     function refreshCounts(){
-      if(!nativeFilter)return;
-      const cards=Array.from(document.querySelectorAll(".zone-item"));
-      const counts=new Map();
-      cards.forEach(card=>{
-        const raw=card.dataset.tags||card.dataset.tag||card.getAttribute("data-tags")||"";
-        raw.split(/[ ,]+/).filter(Boolean).forEach(tag=>counts.set(tag,(counts.get(tag)||0)+1));
-      });
-      categoryNav.querySelectorAll("[data-count-for]").forEach(el=>{
-        const n=counts.get(el.dataset.countFor);
-        el.textContent=n===undefined?"":String(n);
-      });
+      // The canonical category membership is zone.special in the original data.
+      // Do not infer category totals from rendered cards.
     }
     if(nativeFilter){
       new MutationObserver(syncCategories).observe(nativeFilter,{childList:true,subtree:true,attributes:true});
