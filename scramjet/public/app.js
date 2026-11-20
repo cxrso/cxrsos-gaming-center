@@ -54,12 +54,12 @@ function renderTabs(){
 }
 function updateActiveView(){
   const tab=activeTab();if(!tab)return;
-  tabs.forEach(item=>{if(item.frame)item.frame.hidden=item.id!==activeTabId});
+  tabs.forEach(item=>{if(item.frame)item.frame.frame.hidden=item.id!==activeTabId});
   let start=view.querySelector(".start-page");
   if(tab.frame){
     if(start)start.remove();
     if(tab.frame.parentElement!==view)view.appendChild(tab.frame.frame||tab.frame);
-    tab.frame.hidden=false;
+    tab.frame.frame.hidden=false;
   }else{
     if(!start){renderStartPage();start=view.querySelector(".start-page")}
     if(start)start.hidden=false;
