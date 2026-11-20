@@ -1,2 +1,13 @@
 # wrangler.toml
-name = 'cxrsos--browser-gateway'
+name = "cxrsos--browser-gateway"
+main = "worker.js"
+compatibility_date = "2026-11-19"
+workers_dev = true
+
+[observability]
+enabled = true
+
+[observability.logs]
+enabled = true
+invocation_logs = true
+persist = true
