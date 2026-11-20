@@ -60,7 +60,7 @@
       data.movies.forEach(movie => fragment.append(makeCard(movie)));
       grid.append(fragment);
       status.textContent = grid.children.length
-        ? "Showing " + grid.children.length + " feature-film matches · Internet Archive"
+        ? "Showing " + grid.children.length + " film matches · Internet Archive"
         : "No matching films found. Try another title.";
       more.hidden = data.movies.length === 0 || page * 24 >= data.total;
       if (data.notice) status.title = data.notice;
