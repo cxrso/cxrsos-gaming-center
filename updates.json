@@ -1,0 +1,14 @@
+[
+  {
+    "date": "2026-11-19",
+    "type": "Update",
+    "title": "Developer preview access is working",
+    "description": "Fixed preview access configuration and verified that the development preview opens after a fresh production deployment."
+  },
+  {
+    "date": "2026-11-19",
+    "type": "Update",
+    "title": "Public launch countdown is live",
+    "description": "The Coming Soon page now displays the countdown to November 30, 2026 at 12:00 AM Eastern."
+  }
+]
