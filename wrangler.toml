@@ -1,4 +1,2 @@
-name = "cxrso-browser-gateway"
-main = "worker.js"
-compatibility_date = "2026-11-19"
-workers_dev = true
+# wrangler.toml
+name = 'cxrsos--browser-gateway'
