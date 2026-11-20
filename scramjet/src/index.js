@@ -105,7 +105,7 @@ fastify.post("/login", async (request, reply) => {
 
 fastify.addHook("onRequest", async (request, reply) => {
   const path = request.url.split("?")[0];
-  const publicPaths = new Set(["/", "/index.html", "/style.css", "/app.js", "/register-sw.js", "/search.js", "/health", "/session", "/login", "/favicon.ico"]);
+  const publicPaths = new Set(["/", "/index.html", "/style.css", "/app.js", "/register-sw.js", "/search.js", "/sw.js", "/health", "/session", "/login", "/favicon.ico"]);
   if (publicPaths.has(path) || path.startsWith("/scram/") || path.startsWith("/baremux/") || path.startsWith("/libcurl/")) {
     if (path === "/session") return;
     if (path === "/login" || path === "/health") return;
