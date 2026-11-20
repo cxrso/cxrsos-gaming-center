@@ -859,6 +859,35 @@ button,.control-button{accent-color:#800020}
 input,select{color:#fff}
 @media(max-width:650px){.cxrso-brand{font-size:16px;white-space:normal}.header-content{gap:10px}}
 </style>
+
+<style id="cxrso-gamehub-theme">
+:root{--primary:#a51f43;--primary-hover:#c52b55;--bg:#09090d;--bg-secondary:#111117;--surface:#17171f;--surface-hover:#22222d;--border:#2c2c38;--border-light:#292934;--text:#f6f4f6;--text-muted:#aaa6b2;--text-light:#77727e;--gradient-primary:linear-gradient(120deg,#74152f,#b3264d);--gradient-surface:linear-gradient(145deg,#191922,#121219);--shadow-glow:0 0 28px rgba(178,35,75,.22)}
+body{background:#09090d!important;background-image:radial-gradient(ellipse at 50% -15%,rgba(143,24,59,.22),transparent 55%)!important;color:#f6f4f6}
+header{background:rgba(10,10,15,.94)!important;border-bottom:1px solid #29232c!important;box-shadow:0 8px 35px #0008!important}
+.header-content{max-width:1440px;padding:15px 28px}
+.cxrso-brand{font-weight:950;letter-spacing:-.055em;font-size:21px}.cxrso-brand span{color:#e94c75!important}
+.search-container{max-width:650px}.search-container input,.search-container select{background:#17171f!important;border:1px solid #33313c!important;color:#f6f4f6!important;border-radius:10px}
+main{max-width:1440px!important;padding:28px!important}
+#cxrso-gamehub-hero{position:relative;isolation:isolate;overflow:hidden;min-height:270px;margin:0 0 30px;padding:clamp(26px,5vw,54px);display:flex;align-items:center;border:1px solid #542238;border-radius:22px;background:radial-gradient(ellipse at 85% 20%,rgba(211,45,91,.35),transparent 38%),linear-gradient(110deg,#24101a 0%,#160e17 52%,#0e1018 100%);box-shadow:0 18px 60px #0006}
+#cxrso-gamehub-hero:after{content:"";position:absolute;z-index:-1;width:320px;height:320px;right:7%;top:-110px;border:1px solid #ffffff12;border-radius:50%;box-shadow:0 0 0 35px #ffffff08,0 0 0 75px #ffffff05}
+.hub-copy{max-width:650px}.hub-kicker{display:inline-flex;align-items:center;gap:8px;color:#ff9bb5;font-size:11px;font-weight:900;letter-spacing:.18em;text-transform:uppercase}.hub-kicker:before{content:"";width:7px;height:7px;border-radius:50%;background:#ed4774;box-shadow:0 0 12px #ed4774}
+.hub-copy h1{font-size:clamp(34px,5vw,58px);line-height:1.02;letter-spacing:-.055em;margin:15px 0 12px;color:#fff;font-weight:950}.hub-copy p{max-width:520px;color:#c3b7c0;margin:0 0 23px;font-size:15px}
+.hub-actions{display:flex;gap:11px;flex-wrap:wrap}.hub-actions button{width:auto;margin:0;padding:12px 19px;border-radius:10px;font-weight:800;border:1px solid #b83258;background:#b3264d;color:#fff;cursor:pointer}.hub-actions button.secondary{background:#ffffff0b;border-color:#ffffff26}
+.hub-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:23px;color:#a99ba5;font-size:12px}.hub-meta strong{color:#fff}
+#featuredZonesWrapper,#allZonesWrapper{border:0!important;margin:0 0 28px;background:transparent!important}
+#featuredZonesWrapper summary,#allZonesWrapper summary{list-style:none;display:flex;align-items:center;gap:10px;padding:0 0 15px!important;color:#fff!important;font-size:19px!important;font-weight:900!important;letter-spacing:-.02em;border-bottom:1px solid #2b2932;margin-bottom:17px}
+#featuredZonesWrapper summary::-webkit-details-marker,#allZonesWrapper summary::-webkit-details-marker{display:none}
+#featuredZonesWrapper summary:after,#allZonesWrapper summary:after{content:"";height:3px;width:28px;background:#c52b55;border-radius:4px;order:-1}
+#container,#featuredZones{grid-template-columns:repeat(auto-fill,minmax(165px,1fr))!important;gap:16px!important}
+.zone-item{background:#15151d!important;border:1px solid #2b2b36!important;border-radius:13px!important;box-shadow:0 5px 18px #0004!important;transition:transform .2s,border-color .2s,box-shadow .2s!important}
+.zone-item:hover{transform:translateY(-5px)!important;border-color:#a52a50!important;box-shadow:0 12px 30px #0008,0 0 20px #a51f4322!important}
+.zone-item img{aspect-ratio:16/10!important;background:#20202a!important}
+.zone-item button{height:auto!important;min-height:48px;padding:10px 12px!important;text-align:left!important;justify-content:flex-start!important;color:#e8e4e9!important;border-top:1px solid #2a2933!important;font-size:13px!important}
+.zone-item:hover button{color:#ff8aa9!important}
+#zoneCount{color:#aaa6b2!important}
+hr{border:0;border-top:1px solid #292832!important}
+@media(max-width:760px){.header-content{padding:12px 14px;flex-wrap:wrap}.search-container{order:3;flex-basis:100%;max-width:none;flex-wrap:wrap}.search-container input{min-width:100%}.search-container select{flex:1;min-width:0}main{padding:17px 13px 90px!important}#cxrso-gamehub-hero{min-height:250px;padding:25px 21px;margin-bottom:25px}#cxrso-gamehub-hero:after{right:-180px;opacity:.6}#container,#featuredZones{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:11px!important}.zone-item{min-width:0}}
+</style>
 </head>
 <body class="dark-mode" data-google-interstitial="true" data-av-preload-interstitial="true">
     
@@ -889,6 +918,19 @@ input,select{color:#fff}
         </div>
     </header>
 	<main data-google-interstitial="true" data-av-preload-interstitial="true">
+
+<section id="cxrso-gamehub-hero" aria-label="Welcome to CXRSO Gaming Center">
+  <div class="hub-copy">
+    <div class="hub-kicker">Your next game starts here</div>
+    <h1>PLAY MORE.<br>DISCOVER MORE.</h1>
+    <p>Welcome to CXRSO Gaming Center. Explore the library, find something new, and jump straight into the action.</p>
+    <div class="hub-actions">
+      <button type="button" onclick="document.getElementById('allZonesWrapper').scrollIntoView({behavior:'smooth'})">🎮 Browse all games</button>
+      <button type="button" class="secondary" onclick="document.getElementById('searchBar').focus();document.getElementById('searchBar').scrollIntoView({behavior:'smooth',block:'center'})">⌕ Find a game</button>
+    </div>
+    <div class="hub-meta"><span><strong>855+</strong> games to explore</span><span><strong>Free</strong> to play</span><span><strong>New</strong> discoveries daily</span></div>
+  </div>
+</section>
 
     <br>
         <details id="featuredZonesWrapper" open="" data-google-interstitial="true" data-av-preload-interstitial="true">
