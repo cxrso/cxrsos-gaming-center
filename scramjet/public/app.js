@@ -22,10 +22,8 @@ const connection = new BareMux.BareMuxConnection("/baremux/worker.js");
 async function openBrowser() {
   const response = await fetch("/health", { credentials: "same-origin" });
   if (!response.ok) return;
-  const check = await fetch("/login", { method: "OPTIONS" }).catch(() => null);
-  // A protected static request is the definitive session check.
-  const protectedCheck = await fetch("/app.js", { cache: "no-store", credentials: "same-origin" });
-  if (protectedCheck.status === 401) return;
+  const session = await fetch("/session", { cache: "no-store", credentials: "same-origin" });
+  if (!session.ok) return;
   loginPanel.classList.add("hidden");
   browserPanel.classList.remove("hidden");
 }
