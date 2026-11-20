@@ -83,7 +83,7 @@ function createTab(){
 function activateTab(id){if(!tabs.some(tab=>tab.id===id))return;activeTabId=id;updateActiveView()}
 function closeTab(id){
   const index=tabs.findIndex(tab=>tab.id===id);if(index<0)return;
-  const [removed]=tabs.splice(index,1);if(removed.frame)removed.frame.remove();
+  const [removed]=tabs.splice(index,1);if(removed.frame)removed.frame.frame.remove();
   if(!tabs.length){createTab();return}
   if(activeTabId===id)activeTabId=tabs[Math.max(0,index-1)].id;
   updateActiveView();
@@ -148,7 +148,7 @@ forwardButton.addEventListener("click",()=>goHistory(1));
 reloadButton.addEventListener("click",()=>{const tab=activeTab();if(tab?.url&&tab.frame){setStatus("Reloading…");tab.frame.go(tab.url)}});
 homeButton.addEventListener("click",()=>{
   const tab=activeTab();if(!tab)return;
-  if(tab.frame){tab.frame.remove();tab.frame=null}
+  if(tab.frame){tab.frame.frame.remove();tab.frame=null}
   tab.url="";tab.title="New tab";tab.history=[];tab.historyIndex=-1;updateActiveView();
 });
 newTabButton.addEventListener("click",()=>{const tab=createTab();if(tab)address.focus()});
