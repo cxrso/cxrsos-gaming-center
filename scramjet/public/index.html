@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#111114">
   <title>CXRSO Browser</title>
-  <link rel="stylesheet" href="/style.css?v=3">
+  <link rel="stylesheet" href="/style.css?v=4">
   <script src="/scram/scramjet.all.js"></script>
   <script src="/baremux/index.js"></script>
   <script src="/register-sw.js" defer></script>
   <script src="/search.js" defer></script>
-  <script src="/app.js" defer></script>
+  <script src="/app.js?v=2" defer></script>
 </head>
 <body>
   <section id="login-panel" class="login-shell">
@@ -36,7 +36,7 @@
     </header>
 
     <div class="tabbar">
-      <div class="active-tab"><span class="tab-favicon">🌐</span><span id="tab-title">New tab</span><span class="tab-dot"></span></div>
+      <div id="tabs-list" class="tabs-list" role="tablist" aria-label="Browser tabs"></div>
       <button id="new-tab" class="new-tab" type="button" title="New tab" aria-label="New tab">+</button>
     </div>
 
@@ -54,7 +54,7 @@
       </form>
       <button id="menu" class="tool-btn menu-btn" type="button" title="Browser information" aria-label="Browser information">⋮</button>
     </div>
-    <p id="browse-error" class="error browse-error" role="status"></p>
+    <div class="browser-feedback"><p id="browse-error" class="error browse-error" role="status"></p><span id="loading-indicator" class="loading-indicator" aria-live="polite"></span></div>
 
     <main id="view" class="browser-view">
       <div class="start-page">
