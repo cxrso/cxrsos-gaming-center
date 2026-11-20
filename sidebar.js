@@ -4,6 +4,8 @@
   const KEY="cxrso-sidebar-collapsed-v1";
   const THEME_KEY="cxrso-sidebar-theme-v1";
   const WALL_KEY="cxrso-sidebar-wallpaper-v1";
+  function readSetting(key){try{return localStorage.getItem(key);}catch(_){return null;}}
+  function writeSetting(key,value){try{localStorage.setItem(key,value);}catch(_){}}
   const ICONS={all:"⌂",featured:"✦",port:"🧩",tools:"🛠️",emulator:"🎮",nes:"🕹️",nds:"🎲",flash:"⚡",dos:"💾",fnf:"🎵",psx:"🎯",gba:"🎮",n64:"🟣"};
   function init(){
     if(document.getElementById("cxrso-sidebar")) return;
@@ -19,31 +21,35 @@
     const wallpaperSelect=sidebar.querySelector("#cxrso-side-wallpaper");
     const allowedThemes=["maroon","ocean","violet","green","orange","pink"];
     const allowedWallpapers=["ambient","grid","clean"];
-    function applyTheme(value,save){const theme=allowedThemes.includes(value)?value:"maroon";document.body.dataset.cxrsoTheme=theme;themeSelect.value=theme;if(save)localStorage.setItem(THEME_KEY,theme);}
-    function applyWallpaper(value,save){const wallpaper=allowedWallpapers.includes(value)?value:"ambient";document.body.dataset.cxrsoWallpaper=wallpaper;wallpaperSelect.value=wallpaper;if(save)localStorage.setItem(WALL_KEY,wallpaper);}
-    applyTheme(localStorage.getItem(THEME_KEY),false);
-    applyWallpaper(localStorage.getItem(WALL_KEY),false);
+    function applyTheme(value,save){const theme=allowedThemes.includes(value)?value:"maroon";document.body.dataset.cxrsoTheme=theme;themeSelect.value=theme;if(save)writeSetting(THEME_KEY,theme);}
+    function applyWallpaper(value,save){const wallpaper=allowedWallpapers.includes(value)?value:"ambient";document.body.dataset.cxrsoWallpaper=wallpaper;wallpaperSelect.value=wallpaper;if(save)writeSetting(WALL_KEY,wallpaper);}
+    applyTheme(readSetting(THEME_KEY),false);
+    applyWallpaper(readSetting(WALL_KEY),false);
     themeSelect.addEventListener("change",()=>applyTheme(themeSelect.value,true));
     wallpaperSelect.addEventListener("change",()=>applyWallpaper(wallpaperSelect.value,true));
-    const collapsed=localStorage.getItem(KEY)!=="false";
+    const collapsed=readSetting(KEY)!=="false";
     document.body.classList.toggle("cxrso-sidebar-collapsed",collapsed);
     document.body.classList.toggle("cxrso-sidebar-expanded",!collapsed);
-    function setCollapsed(value){document.body.classList.toggle("cxrso-sidebar-collapsed",value);document.body.classList.toggle("cxrso-sidebar-expanded",!value);localStorage.setItem(KEY,String(value));const b=sidebar.querySelector(".cxrso-side-toggle");b.textContent=value?"›":"‹";b.setAttribute("aria-label",value?"Expand sidebar":"Collapse sidebar");}
+    function setCollapsed(value){document.body.classList.toggle("cxrso-sidebar-collapsed",value);document.body.classList.toggle("cxrso-sidebar-expanded",!value);writeSetting(KEY,String(value));const b=sidebar.querySelector(".cxrso-side-toggle");b.textContent=value?"›":"‹";b.setAttribute("aria-label",value?"Expand sidebar":"Collapse sidebar");}
     setCollapsed(collapsed);
     sidebar.querySelector(".cxrso-side-toggle").addEventListener("click",()=>setCollapsed(!document.body.classList.contains("cxrso-sidebar-collapsed")));
-    mobile.addEventListener("click",()=>document.body.classList.toggle("cxrso-sidebar-mobile-open"));
-    document.addEventListener("click",e=>{if(document.body.classList.contains("cxrso-sidebar-mobile-open")&&!sidebar.contains(e.target)&&!mobile.contains(e.target))document.body.classList.remove("cxrso-sidebar-mobile-open");});
-    function markActive(button){sidebar.querySelectorAll(".cxrso-side-link").forEach(b=>b.removeAttribute("aria-current"));button.setAttribute("aria-current","true");}
+    mobile.setAttribute("aria-expanded","false");mobile.setAttribute("aria-controls","cxrso-sidebar");mobile.addEventListener("click",()=>{const opened=document.body.classList.toggle("cxrso-sidebar-mobile-open");mobile.setAttribute("aria-expanded",String(opened));});
+    function closeMobile(){document.body.classList.remove("cxrso-sidebar-mobile-open");mobile.setAttribute("aria-expanded","false");}
+    document.addEventListener("click",e=>{if(document.body.classList.contains("cxrso-sidebar-mobile-open")&&!sidebar.contains(e.target)&&!mobile.contains(e.target))closeMobile();});
+    document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("cxrso-sidebar-mobile-open")){closeMobile();mobile.focus();}});
+    function markActive(button){sidebar.querySelectorAll(".cxrso-side-link").forEach(b=>b.removeAttribute("aria-current"));if(button)button.setAttribute("aria-current","page");}
+    function syncActiveFromNative(){if(!nativeFilter)return;const selected=nativeFilter.value;const button=selected==="none"?sidebar.querySelector('[data-action="all"]'):Array.from(categoryNav.querySelectorAll("[data-tag]")).find(b=>b.dataset.tag===selected);markActive(button);}
+    if(nativeFilter)nativeFilter.addEventListener("change",syncActiveFromNative);
     sidebar.addEventListener("click",e=>{
       const button=e.target.closest(".cxrso-side-link");if(!button)return;markActive(button);
-      if(button.dataset.action==="featured"){const featured=document.getElementById("featuredZonesWrapper");if(featured){featured.open=true;featured.scrollIntoView({behavior:"smooth",block:"start"});}document.body.classList.remove("cxrso-sidebar-mobile-open");return;}
+      if(button.dataset.action==="featured"){const featured=document.getElementById("featuredZonesWrapper");if(featured){featured.open=true;featured.scrollIntoView({behavior:"smooth",block:"start"});}closeMobile();return;}
       if(!nativeFilter||!nativeSearch)return;
       nativeSearch.value="";
       nativeSearch.dispatchEvent(new Event("input",{bubbles:true}));
       nativeFilter.value=button.dataset.tag||"none";
       nativeFilter.dispatchEvent(new Event("change",{bubbles:true}));
       const all=document.getElementById("allZonesWrapper");if(all){all.open=true;all.scrollIntoView({behavior:"smooth",block:"start"});}
-      document.body.classList.remove("cxrso-sidebar-mobile-open");
+      closeMobile();
     });
     const categoryNav=document.getElementById("cxrso-side-categories");
     function syncCategories(){
@@ -69,6 +75,7 @@
     if(nativeFilter){
       new MutationObserver(syncCategories).observe(nativeFilter,{childList:true,subtree:true,attributes:true});
       syncCategories();
+      syncActiveFromNative();
       const gameContainer=document.getElementById("container");
       if(gameContainer)new MutationObserver(refreshCounts).observe(gameContainer,{childList:true,subtree:true,attributes:true,attributeFilter:["data-tags","data-tag"]});
       refreshCounts();
