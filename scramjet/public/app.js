@@ -56,13 +56,19 @@ function updateActiveView(){
   const tab=activeTab();if(!tab)return;
   tabs.forEach(item=>{if(item.frame)item.frame.hidden=item.id!==activeTabId});
   let start=view.querySelector(".start-page");
-  if(tab.frame){if(start)start.remove();tab.frame.hidden=false}
-  else if(!start){renderStartPage()}
+  if(tab.frame){
+    if(start)start.remove();
+    if(tab.frame.parentElement!==view)view.appendChild(tab.frame.frame||tab.frame);
+    tab.frame.hidden=false;
+  }else{
+    if(!start){renderStartPage();start=view.querySelector(".start-page")}
+    if(start)start.hidden=false;
+  }
   address.value=tab.url||"";
   setNavState();renderTabs();setStatus("");
 }
 function renderStartPage(){
-  view.replaceChildren();
+  const prior=view.querySelector(".start-page");if(prior)prior.remove();
   const page=document.createElement("div");page.className="start-page";
   page.innerHTML='<div class="start-mark">C</div><p class="start-eyebrow">CXRSO BROWSER</p><h1>Where to?</h1><p>Search the web or enter a website address above.</p><form id="start-form" class="start-search"><input id="start-address" placeholder="Search Google or enter a URL" autocomplete="off" aria-label="Search the web"><button type="submit">Search</button></form><div class="quick-links"><a href="https://www.google.com/" data-url="https://www.google.com/">Google</a><a href="https://www.youtube.com/" data-url="https://www.youtube.com/">YouTube</a><a href="https://www.wikipedia.org/" data-url="https://www.wikipedia.org/">Wikipedia</a></div>';
   view.appendChild(page);
