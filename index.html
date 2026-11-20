@@ -1173,6 +1173,7 @@ function displayFeaturedZones(featuredZones) {
     featuredZones.forEach((file, index) => {
         const zoneItem = document.createElement("div");
         zoneItem.className = "zone-item";
+        zoneItem.__cxrsoFile = file;
         zoneItem.onclick = () => openZone(file);
         const img = document.createElement("img");
         img.dataset.src = zoneURL(file.cover);
@@ -1222,6 +1223,7 @@ function displayZones(zones) {
     zones.forEach((file, index) => {
         const zoneItem = document.createElement("div");
         zoneItem.className = "zone-item";
+        zoneItem.__cxrsoFile = file;
         zoneItem.onclick = () => openZone(file);
         const img = document.createElement("img");
         img.dataset.src = zoneURL(file.cover);
@@ -1992,6 +1994,7 @@ function displayFeaturedZones(featuredZones) {
     featuredZones.forEach((file, index) => {
         const zoneItem = document.createElement("div");
         zoneItem.className = "zone-item";
+        zoneItem.__cxrsoFile = file;
         zoneItem.onclick = () => openZone(file);
         const img = document.createElement("img");
         img.dataset.src = zoneURL(file.cover);
@@ -2041,6 +2044,7 @@ function displayZones(zones) {
     zones.forEach((file, index) => {
         const zoneItem = document.createElement("div");
         zoneItem.className = "zone-item";
+        zoneItem.__cxrsoFile = file;
         zoneItem.onclick = () => openZone(file);
         const img = document.createElement("img");
         img.dataset.src = zoneURL(file.cover);
@@ -2711,4 +2715,14 @@ HTMLCanvasElement.prototype.toDataURL = function (...args) {
  buildCategories();new MutationObserver(buildCategories).observe($("filterOptions"),{childList:true});
 })();
 </script>
-<script src="/announcements.js" defer></script></body></html>
+<script>
+// Reliable delegated game-card activation, including dynamically filtered cards.
+document.addEventListener("click", function(event) {
+    const card = event.target.closest && event.target.closest(".zone-item");
+    if (!card || !card.__cxrsoFile) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    try { openZone(card.__cxrsoFile); }
+    catch (error) { console.error("Could not open game:", error); alert("This game could not be opened. Please try again."); }
+}, true);
+</script><script src="/announcements.js" defer></script></body></html>
