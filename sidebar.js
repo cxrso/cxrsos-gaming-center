@@ -9,10 +9,15 @@
   const ICONS={all:"⌂",featured:"✦",port:"🧩",tools:"🛠️",emulator:"🎮",nes:"🕹️",nds:"🎲",flash:"⚡",dos:"💾",fnf:"🎵",psx:"🎯",gba:"🎮",n64:"🟣"};
   function init(){
     if(document.getElementById("cxrso-sidebar")) return;
-    // Remove an accidental standalone slash-n text node if one is present.
-    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-    const stray=[];while(walker.nextNode()){if(walker.currentNode.nodeValue.trim()==="/n")stray.push(walker.currentNode);}
-    stray.forEach(node=>node.parentNode&&node.parentNode.removeChild(node));
+    // Remove stray literal "/n" text nodes, including ones injected after startup.
+    function removeStraySlashN(){
+      const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+      const stray=[];
+      while(walker.nextNode()) if(walker.currentNode.nodeValue.trim()==="/n") stray.push(walker.currentNode);
+      stray.forEach(node=>node.parentNode&&node.parentNode.removeChild(node));
+    }
+    removeStraySlashN();
+    new MutationObserver(removeStraySlashN).observe(document.body,{childList:true,subtree:true});
 
     // Keep player mode in sync with the real viewer, including duplicate legacy openZone() definitions.
     const zoneViewer=document.getElementById("zoneViewer");
@@ -31,7 +36,7 @@
     const sidebar=document.createElement("aside");
     sidebar.id="cxrso-sidebar";
     sidebar.setAttribute("aria-label","Game center navigation");
-    sidebar.innerHTML='<div class="cxrso-side-head"><div class="cxrso-side-brand">CXRSO <span>LIBRARY</span></div><button class="cxrso-side-toggle" type="button" aria-label="Collapse sidebar" title="Collapse sidebar">‹</button></div><section class="cxrso-side-section"><div class="cxrso-side-label">Library</div><nav class="cxrso-side-nav" id="cxrso-side-primary"><button class="cxrso-side-link" type="button" data-action="all" aria-current="true"><span class="cxrso-side-icon">⌂</span><span class="cxrso-side-name">All games</span></button><button class="cxrso-side-link" type="button" data-action="featured"><span class="cxrso-side-icon">✦</span><span class="cxrso-side-name">Featured</span></button><button class="cxrso-side-link" type="button" data-action="movies"><span class="cxrso-side-icon">🎬</span><span class="cxrso-side-name">Movies</span></button></nav></section><section class="cxrso-side-section" style="flex:1;min-height:0"><div class="cxrso-side-label">Categories</div><nav class="cxrso-side-nav" id="cxrso-side-categories" aria-label="Game categories"><div class="cxrso-side-empty">Loading categories…</div></nav></section><section class="cxrso-side-section"><div class="cxrso-side-label">Appearance</div><div class="cxrso-appearance"><label for="cxrso-side-theme">Accent theme</label><select id="cxrso-side-theme"><option value="maroon">CXRSO Maroon</option><option value="ocean">Ocean Blue</option><option value="violet">Electric Violet</option><option value="green">Neon Green</option><option value="orange">Solar Orange</option><option value="pink">Hot Pink</option></select><label for="cxrso-side-wallpaper">Background</label><select id="cxrso-side-wallpaper"><option value="ambient">Ambient Glow</option><option value="grid">Subtle Grid</option><option value="clean">Clean Dark</option></select></div></section><div class="cxrso-side-footer">Your game library · CXRSO</div>';
+    sidebar.innerHTML='<div class="cxrso-side-head"><div class="cxrso-side-brand">CXRSO <span>LIBRARY</span></div><button class="cxrso-side-toggle" type="button" aria-label="Collapse sidebar" title="Collapse sidebar">‹</button></div><section class="cxrso-side-section"><div class="cxrso-side-label">Library</div><nav class="cxrso-side-nav" id="cxrso-side-primary"><button class="cxrso-side-link" type="button" data-action="all" aria-current="true"><span class="cxrso-side-icon">⌂</span><span class="cxrso-side-name">All games</span></button><button class="cxrso-side-link" type="button" data-action="featured"><span class="cxrso-side-icon">✦</span><span class="cxrso-side-name">Featured</span></button></nav></section><section class="cxrso-side-section" style="flex:1;min-height:0"><div class="cxrso-side-label">Categories</div><nav class="cxrso-side-nav" id="cxrso-side-categories" aria-label="Game categories"><div class="cxrso-side-empty">Loading categories…</div></nav></section><section class="cxrso-side-section"><div class="cxrso-side-label">Appearance</div><div class="cxrso-appearance"><label for="cxrso-side-theme">Accent theme</label><select id="cxrso-side-theme"><option value="maroon">CXRSO Maroon</option><option value="ocean">Ocean Blue</option><option value="violet">Electric Violet</option><option value="green">Neon Green</option><option value="orange">Solar Orange</option><option value="pink">Hot Pink</option></select><label for="cxrso-side-wallpaper">Background</label><select id="cxrso-side-wallpaper"><option value="ambient">Ambient Glow</option><option value="grid">Subtle Grid</option><option value="clean">Clean Dark</option></select></div></section><div class="cxrso-side-footer">Your game library · CXRSO</div>';
     document.body.appendChild(sidebar);
     const mobile=document.createElement("button");mobile.id="cxrso-side-mobile";mobile.type="button";mobile.textContent="☰";mobile.setAttribute("aria-label","Open game navigation");document.body.appendChild(mobile);
     const themeSelect=sidebar.querySelector("#cxrso-side-theme");
@@ -59,7 +64,6 @@
     if(nativeFilter)nativeFilter.addEventListener("change",syncActiveFromNative);
     sidebar.addEventListener("click",e=>{
       const button=e.target.closest(".cxrso-side-link");if(!button)return;markActive(button);
-      if(button.dataset.action==="movies"){closeMobile();window.location.href="/movies.html";return;}
       if(button.dataset.action==="featured"){const featured=document.getElementById("featuredZonesWrapper");if(featured){featured.open=true;featured.scrollIntoView({behavior:"smooth",block:"start"});}closeMobile();return;}
       if(!nativeFilter||!nativeSearch)return;
       nativeSearch.value="";
