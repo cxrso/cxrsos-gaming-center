@@ -2,13 +2,14 @@ const ARCHIVE_SEARCH="https://archive.org/advancedsearch.php";
 const ARCHIVE_META="https://archive.org/metadata/";
 const ALLOWED_COLLECTIONS=new Set(["feature_films","moviesandfilms"]);
 const EDUCATION_TERMS=/\b(educational|instructional|classroom|lecture|lesson|teaching|teacher training|school film|training film|study guide|how to|demonstration|curriculum|educational television|college course|university course|science lesson|filmstrip|short film|movie trailer|trailer|newsreel|film clip|movie clip)\b/i;
+const ADULT_CONTENT_TERMS=/\b(porn(?:ography|ographic)?|xxx|hardcore|erotic|erotica|sexploitation|adult film|adult movie|nudity|nude scene|full frontal|explicit sex|sexual content|topless|striptease|playboy|hentai)\b/i;
 function json(data,status=200){return new Response(JSON.stringify(data),{status,headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"public, max-age=180, s-maxage=300","X-Content-Type-Options":"nosniff"}})}
 function clean(value,max=240){return String(value||"").replace(/[<>\u0000-\u001f]/g," ").replace(/\s+/g," ").trim().slice(0,max)}
 function isOpenLicense(value){try{const url=new URL(String(value||""));return url.hostname==="creativecommons.org"||url.hostname==="www.creativecommons.org"}catch{return false}}
 function isFeatureFilm(meta){
   const collection=Array.isArray(meta.collection)?meta.collection:[meta.collection].filter(Boolean);
-  const text=[meta.title,meta.description,meta.subject,meta.type].flat().join(" ");
-  return collection.some(item=>ALLOWED_COLLECTIONS.has(item))&&!EDUCATION_TERMS.test(text);
+  const text=[meta.title,meta.description,meta.subject,meta.type,meta.genre,meta.rating].flat().join(" ");
+  return collection.some(item=>ALLOWED_COLLECTIONS.has(item))&&!EDUCATION_TERMS.test(text)&&!ADULT_CONTENT_TERMS.test(text);
 }
 async function getMetadata(identifier){
   if(!/^[a-zA-Z0-9._-]{1,120}$/.test(identifier))return null;
