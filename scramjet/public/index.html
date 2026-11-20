@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#160609">
+  <meta name="theme-color" content="#111114">
   <title>CXRSO Browser</title>
-  <link rel="stylesheet" href="/style.css?v=2">
+  <link rel="stylesheet" href="/style.css?v=3">
   <script src="/scram/scramjet.all.js"></script>
   <script src="/baremux/index.js"></script>
   <script src="/register-sw.js" defer></script>
@@ -13,22 +13,67 @@
   <script src="/app.js" defer></script>
 </head>
 <body>
-  <header><div class="brand"><span class="mark">C</span><div><strong>CXRSO BROWSER</strong><small>POWERED BY SCRAMJET</small></div></div><span class="status">ENGINE ONLINE</span></header>
-  <main>
-    <section id="login-panel" class="panel">
-      <p class="eyebrow">PRIVATE ACCESS</p><h1>Welcome back.</h1>
-      <p class="muted">Enter the access code configured by the browser owner.</p>
-      <form id="login-form"><label for="password">Access code</label><input id="password" type="password" autocomplete="current-password" required><button>Unlock browser</button></form>
+  <section id="login-panel" class="login-shell">
+    <div class="login-card">
+      <div class="login-brand"><span class="mark">C</span><div><strong>CXRSO BROWSER</strong><small>PRIVATE BROWSING ENGINE</small></div></div>
+      <p class="eyebrow">PRIVATE ACCESS</p>
+      <h1>Welcome back.</h1>
+      <p class="muted">Enter the browser access code to continue.</p>
+      <form id="login-form">
+        <label for="password">Access code</label>
+        <input id="password" type="password" autocomplete="current-password" required>
+        <button type="submit">Unlock browser</button>
+      </form>
       <p id="login-error" class="error" role="status"></p>
-    </section>
-    <section id="browser-panel" class="panel hidden">
-      <p class="eyebrow">CXRSO BROWSER ENGINE</p><h1>Where to?</h1>
-      <form id="browse-form" class="address"><input id="address" placeholder="Search or enter a website address" autocomplete="off" required><button>Go</button></form>
-      <p id="browse-error" class="error" role="status"></p>
-      <div id="view" class="view"><div class="welcome"><span>👀</span><h2>Your browser is ready.</h2><p>Enter a website above to open it in the Scramjet-powered tab.</p></div></div>
-      <p class="fine">Some sites may still restrict proxy traffic, sign-ins, media, or school-managed networks. This service is access-code protected and is not an anonymity tool.</p>
-    </section>
-  </main>
-  <footer><span>CXRSO'S GAMING CENTER</span><span>Scramjet is experimental open-source software by Mercury Workshop.</span></footer>
+      <div class="login-foot">CXRSO'S GAMING CENTER</div>
+    </div>
+  </section>
+
+  <section id="browser-panel" class="browser-shell hidden">
+    <header class="topbar">
+      <div class="brand"><span class="mark">C</span><div><strong>CXRSO BROWSER</strong><small>SCRAMJET ENGINE</small></div></div>
+      <div class="top-actions"><span class="engine-status"><i></i> ENGINE ONLINE</span><a href="/" class="exit-link">Game Center ↗</a></div>
+    </header>
+
+    <div class="tabbar">
+      <div class="active-tab"><span class="tab-favicon">🌐</span><span id="tab-title">New tab</span><span class="tab-dot"></span></div>
+      <button id="new-tab" class="new-tab" type="button" title="New tab" aria-label="New tab">+</button>
+    </div>
+
+    <div class="toolbar">
+      <div class="nav-controls">
+        <button id="back" class="tool-btn" type="button" title="Back" aria-label="Back" disabled>‹</button>
+        <button id="forward" class="tool-btn" type="button" title="Forward" aria-label="Forward" disabled>›</button>
+        <button id="reload" class="tool-btn" type="button" title="Reload" aria-label="Reload">↻</button>
+        <button id="home" class="tool-btn" type="button" title="Home" aria-label="Home">⌂</button>
+      </div>
+      <form id="browse-form" class="address-form">
+        <span class="secure-mark">◉</span>
+        <input id="address" placeholder="Search Google or enter a URL" autocomplete="off" spellcheck="false" required aria-label="Search or enter website address">
+        <button type="submit">Go</button>
+      </form>
+      <button id="menu" class="tool-btn menu-btn" type="button" title="Browser information" aria-label="Browser information">⋮</button>
+    </div>
+    <p id="browse-error" class="error browse-error" role="status"></p>
+
+    <main id="view" class="browser-view">
+      <div class="start-page">
+        <div class="start-mark">C</div>
+        <p class="start-eyebrow">CXRSO BROWSER</p>
+        <h1>Where to?</h1>
+        <p>Search the web or enter a website address above.</p>
+        <form id="start-form" class="start-search">
+          <input id="start-address" placeholder="Search Google or enter a URL" autocomplete="off" aria-label="Search the web">
+          <button type="submit">Search</button>
+        </form>
+        <div class="quick-links">
+          <a href="https://www.google.com/" data-url="https://www.google.com/">Google</a>
+          <a href="https://www.youtube.com/" data-url="https://www.youtube.com/">YouTube</a>
+          <a href="https://www.wikipedia.org/" data-url="https://www.wikipedia.org/">Wikipedia</a>
+        </div>
+      </div>
+    </main>
+    <footer class="browser-footer"><span>Ready</span><span>Some websites may restrict proxy access or playback.</span></footer>
+  </section>
 </body>
 </html>
