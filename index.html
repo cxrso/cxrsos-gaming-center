@@ -1199,24 +1199,7 @@ function displayFeaturedZones(featuredZones) {
         document.getElementById("allZonesSummary").textContent = `Featured Zones (${featuredZones.length})`;
     }
 
-    const lazyImages = document.querySelectorAll('#featuredZones img.lazy-zone-img');
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !zoneViewer.hidden) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove("lazy-zone-img");
-                observer.unobserve(img);
-            }
-        });
-    }, {
-        rootMargin: "100px", 
-        threshold: 0.1
-    });
-
-    lazyImages.forEach(img => {
-        imageObserver.observe(img);
-    });
+    // Images already have their final src; native loading="lazy" handles loading.
 }
 function displayZones(zones) {
     container.innerHTML = "";
@@ -1249,24 +1232,7 @@ function displayZones(zones) {
         document.getElementById("allSummary").textContent = `All Zones (${zones.length})`;
     }
 
-    const lazyImages = document.querySelectorAll('img.lazy-zone-img');
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !zoneViewer.hidden) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove("lazy-zone-img");
-                observer.unobserve(img);
-            }
-        });
-    }, {
-        rootMargin: "100px", 
-        threshold: 0.1
-    });
-
-    lazyImages.forEach(img => {
-        imageObserver.observe(img);
-    });
+    // Images already have their final src; native loading="lazy" handles loading.
 }
 
 function filterZones2() {
@@ -1312,27 +1278,42 @@ function injectZoneBase(html, url) {
 }
 
 function openZone(file) {
-    if (file.url.startsWith("http")) {
-        window.open(file.url, "_blank");
-    } else {
-        const url = zoneURL(file.url);
-        fetch(url+"?t="+Date.now()).then(response => response.text()).then(html => {
-            if (/ytgame/i.test(html)) {
-                document.getElementById('popupTitle').textContent = file.name;
-                const pb = document.getElementById('popupBody');
-                pb.contentEditable = false;
-                pb.innerHTML = '<p style="margin-top:0;">This is a YouTube Playables game, so it only works in its own tab. It\'ll open in a <strong>new tab</strong>.</p>'
-                    + '<button class="settings-button" id="ytOpenBtn">Open in New Tab</button>';
-                document.getElementById('ytOpenBtn').onclick = function () {
-    const newWindow = window.open("about:blank", "_blank");
-    if (!newWindow) {
-        alert("Your browser blocked the popup. Allow popups for this site and try again.");
+    if (!file || !file.url) {
+        alert("This game is missing its launch URL.");
         return;
     }
-    newWindow.document.open();
-    newWindow.document.write(injectZoneBase(html, url));
-    newWindow.document.close();
-    closePopup();
+    if (/^https?:\/\//i.test(file.url)) {
+        const opened = window.open(file.url, "_blank");
+        if (!opened) alert("Your browser blocked the game tab. Allow popups for this site and try again.");
+        return;
+    }
+
+    const url = zoneURL(file.url);
+    document.getElementById("zoneName").textContent = file.name || "Game";
+    document.getElementById("zoneId").textContent = file.id ?? "";
+    const authorEl = document.getElementById("zoneAuthor");
+    authorEl.textContent = file.author ? "by " + file.author : "";
+    if (file.authorLink) authorEl.href = file.authorLink;
+    else authorEl.removeAttribute("href");
+
+    // Navigate the game frame directly. This avoids fetch/CORS failures and
+    // lets the browser resolve the game's relative assets from its own URL.
+    if (!zoneFrame || !zoneFrame.isConnected) {
+        zoneFrame = document.createElement("iframe");
+        zoneFrame.id = "zoneFrame";
+        zoneViewer.appendChild(zoneFrame);
+    }
+    zoneFrame.removeAttribute("srcdoc");
+    zoneFrame.src = url;
+    zoneViewer.style.display = "block";
+    zoneViewer.hidden = false;
+    try {
+        const nextUrl = new URL(window.location.href);
+        nextUrl.searchParams.set("id", file.id);
+        history.pushState(null, "", nextUrl.toString());
+    } catch (error) {
+        console.warn("Could not update game URL:", error);
+    }
 };
                 document.getElementById('popupOverlay').style.display = "flex";
                 return;
@@ -2020,24 +2001,7 @@ function displayFeaturedZones(featuredZones) {
         document.getElementById("allZonesSummary").textContent = `Featured Zones (${featuredZones.length})`;
     }
 
-    const lazyImages = document.querySelectorAll('#featuredZones img.lazy-zone-img');
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !zoneViewer.hidden) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove("lazy-zone-img");
-                observer.unobserve(img);
-            }
-        });
-    }, {
-        rootMargin: "100px", 
-        threshold: 0.1
-    });
-
-    lazyImages.forEach(img => {
-        imageObserver.observe(img);
-    });
+    // Images already have their final src; native loading="lazy" handles loading.
 }
 function displayZones(zones) {
     container.innerHTML = "";
@@ -2070,24 +2034,7 @@ function displayZones(zones) {
         document.getElementById("allSummary").textContent = `All Zones (${zones.length})`;
     }
 
-    const lazyImages = document.querySelectorAll('img.lazy-zone-img');
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !zoneViewer.hidden) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove("lazy-zone-img");
-                observer.unobserve(img);
-            }
-        });
-    }, {
-        rootMargin: "100px", 
-        threshold: 0.1
-    });
-
-    lazyImages.forEach(img => {
-        imageObserver.observe(img);
-    });
+    // Images already have their final src; native loading="lazy" handles loading.
 }
 
 function filterZones2() {
@@ -2133,27 +2080,42 @@ function injectZoneBase(html, url) {
 }
 
 function openZone(file) {
-    if (file.url.startsWith("http")) {
-        window.open(file.url, "_blank");
-    } else {
-        const url = zoneURL(file.url);
-        fetch(url+"?t="+Date.now()).then(response => response.text()).then(html => {
-            if (/ytgame/i.test(html)) {
-                document.getElementById('popupTitle').textContent = file.name;
-                const pb = document.getElementById('popupBody');
-                pb.contentEditable = false;
-                pb.innerHTML = '<p style="margin-top:0;">This is a YouTube Playables game, so it only works in its own tab. It\'ll open in a <strong>new tab</strong>.</p>'
-                    + '<button class="settings-button" id="ytOpenBtn">Open in New Tab</button>';
-                document.getElementById('ytOpenBtn').onclick = function () {
-    const newWindow = window.open("about:blank", "_blank");
-    if (!newWindow) {
-        alert("Your browser blocked the popup. Allow popups for this site and try again.");
+    if (!file || !file.url) {
+        alert("This game is missing its launch URL.");
         return;
     }
-    newWindow.document.open();
-    newWindow.document.write(injectZoneBase(html, url));
-    newWindow.document.close();
-    closePopup();
+    if (/^https?:\/\//i.test(file.url)) {
+        const opened = window.open(file.url, "_blank");
+        if (!opened) alert("Your browser blocked the game tab. Allow popups for this site and try again.");
+        return;
+    }
+
+    const url = zoneURL(file.url);
+    document.getElementById("zoneName").textContent = file.name || "Game";
+    document.getElementById("zoneId").textContent = file.id ?? "";
+    const authorEl = document.getElementById("zoneAuthor");
+    authorEl.textContent = file.author ? "by " + file.author : "";
+    if (file.authorLink) authorEl.href = file.authorLink;
+    else authorEl.removeAttribute("href");
+
+    // Navigate the game frame directly. This avoids fetch/CORS failures and
+    // lets the browser resolve the game's relative assets from its own URL.
+    if (!zoneFrame || !zoneFrame.isConnected) {
+        zoneFrame = document.createElement("iframe");
+        zoneFrame.id = "zoneFrame";
+        zoneViewer.appendChild(zoneFrame);
+    }
+    zoneFrame.removeAttribute("srcdoc");
+    zoneFrame.src = url;
+    zoneViewer.style.display = "block";
+    zoneViewer.hidden = false;
+    try {
+        const nextUrl = new URL(window.location.href);
+        nextUrl.searchParams.set("id", file.id);
+        history.pushState(null, "", nextUrl.toString());
+    } catch (error) {
+        console.warn("Could not update game URL:", error);
+    }
 };
                 document.getElementById('popupOverlay').style.display = "flex";
                 return;
