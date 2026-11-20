@@ -888,12 +888,22 @@ main{max-width:1440px!important;padding:28px!important}
 hr{border:0;border-top:1px solid #292832!important}
 @media(max-width:760px){.header-content{padding:12px 14px;flex-wrap:wrap}.search-container{order:3;flex-basis:100%;max-width:none;flex-wrap:wrap}.search-container input{min-width:100%}.search-container select{flex:1;min-width:0}main{padding:17px 13px 90px!important}#cxrso-gamehub-hero{min-height:250px;padding:25px 21px;margin-bottom:25px}#cxrso-gamehub-hero:after{right:-180px;opacity:.6}#container,#featuredZones{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:11px!important}.zone-item{min-width:0}}
 </style>
-    <link rel="stylesheet" href="sidebar.css?v=1">\n</head>
+    <link rel="stylesheet" href="sidebar.css?v=1">\n<style id="cxrso-header-polish">
+.cxrso-brand{display:flex;align-items:center;gap:.24em;letter-spacing:.015em!important}
+.cxrso-brand .cxrso-brand-prefix{color:#fff!important;letter-spacing:.015em}
+.cxrso-brand .cxrso-brand-title{color:var(--cxrso-side-accent,#ff1838)!important;letter-spacing:.015em}
+#settings{display:none!important}
+#refresh{font-size:29px;line-height:1;font-weight:700;color:#fff}
+#refresh:hover{transform:translateY(-2px)}
+#refresh:active{transform:rotate(35deg)}
+#refresh img{display:none!important}
+@media(max-width:650px){.cxrso-brand{gap:.18em;letter-spacing:0!important}.cxrso-brand .cxrso-brand-prefix,.cxrso-brand .cxrso-brand-title{letter-spacing:0}}
+</style></head>
 <body class="dark-mode" data-google-interstitial="true" data-av-preload-interstitial="true">
     
     <header data-google-interstitial="true" data-av-preload-interstitial="true">
         <div class="header-content" data-google-interstitial="true" data-av-preload-interstitial="true">
-            <div class="logo cxrso-brand" aria-label="CXRSO'S GAMING CENTER">CXRSO'S <span>GAMING CENTER</span></div>
+            <div class="logo cxrso-brand" aria-label="CXRSO'S GAMING CENTER"><span class="cxrso-brand-prefix">CXRSO'S</span><span class="cxrso-brand-title">GAMING CENTER</span></div>
             <div class="search-container">
                 <input type="text" id="searchBar" placeholder="Search games..." oninput="filterZones()">
                 <select id="sortOptions" onchange="sortZones()">
@@ -905,9 +915,7 @@ hr{border:0;border-top:1px solid #292832!important}
                 <option value="port">Port</option><option value="tools">Tools</option><option value="emulator">Emulator</option><option value="nes">Nes</option><option value="nds">Nds</option><option value="flash">Flash</option><option value="dos">Dos</option><option value="fnf">Fnf</option><option value="psx">Psx</option><option value="gba">Gba</option><option value="n64">N64</option></select>
             </div>
             <div class="control-buttons" data-google-interstitial="true" data-av-preload-interstitial="true">
-                <button id="refresh" class="control-button" title="Refresh all games" onclick="listZones()" data-av-preload-interstitial="true" data-google-interstitial="true" data-av-preload-cleaned="true">
-                    <img src="refresh-icon.png" alt="refresh">
-                </button>
+                <button id="refresh" class="control-button" title="Refresh all games" aria-label="Refresh all games" onclick="listZones()">↻</button>
 
                 <button id="cxrsoBrowser" class="control-button" title="Open CXRSO Browser" aria-label="Open CXRSO Browser" onclick="window.open('browser.html','_blank','noopener')">👀</button>
 
