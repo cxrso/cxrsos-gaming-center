@@ -74,7 +74,11 @@ const fastify = Fastify({
     }),
 });
 
-fastify.get("/health", async () => ({ ok: true, service: "cxrso-scramjet", authenticated: true }));
+fastify.get("/health", async () => ({ ok: true, service: "cxrso-scramjet" }));
+fastify.get("/session", async (request, reply) => {
+  if (!validSession(request.headers.cookie)) return reply.code(401).send({ authenticated: false });
+  return { authenticated: true };
+});
 
 fastify.post("/login", async (request, reply) => {
   if (!ACCESS_PASSWORD || !SESSION_SECRET) {
@@ -100,7 +104,13 @@ fastify.post("/login", async (request, reply) => {
 });
 
 fastify.addHook("onRequest", async (request, reply) => {
-  if (request.url === "/health" || request.url === "/login") return;
+  const path = request.url.split("?")[0];
+  const publicPaths = new Set(["/", "/index.html", "/style.css", "/app.js", "/register-sw.js", "/search.js", "/health", "/session", "/login", "/favicon.ico"]);
+  if (publicPaths.has(path) || path.startsWith("/scram/") || path.startsWith("/baremux/") || path.startsWith("/libcurl/")) {
+    if (path === "/session") return;
+    if (path === "/login" || path === "/health") return;
+    return;
+  }
   if (!validSession(request.headers.cookie)) {
     return reply.code(401).type("application/json").send({ error: "Sign in to CXRSO Browser first." });
   }
