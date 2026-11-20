@@ -21,14 +21,14 @@ Object.assign(wisp.options, {
   allow_loopback_ips: false,
   dns_servers: ["1.1.1.3", "1.0.0.3"],
   hostname_blacklist: [
-    /(^|\\.)localhost$/i,
-    /(^|\\.)local$/i,
-    /^127\\./,
-    /^10\\./,
-    /^192\\.168\\./,
-    /^169\\.254\\./,
-    /^172\\.(1[6-9]|2[0-9]|3[01])\\./,
-    /metadata\\.google\\.internal$/i,
+    /(^|\.)localhost$/i,
+    /(^|\.)local$/i,
+    /^127\./,
+    /^10\./,
+    /^192\.168\./,
+    /^169\.254\./,
+    /^172\.(1[6-9]|2[0-9]|3[01])\./,
+    /metadata\.google\.internal$/i,
   ],
 });
 
