@@ -57,6 +57,15 @@
     .cxrso-update-item h3 { margin: 0 0 5px; font-size: 16px; }
     .cxrso-update-item p { margin: 0; color: #d0bdc5; font-size: 13px; line-height: 1.55; }
     .cxrso-updates-empty { padding: 20px; color: #c5a8b4; text-align: center; }
+    #cxrso-big-announcement {
+      display:none; width:100%; min-height:46px; padding:11px 16px;
+      border:0; border-bottom:1px solid #d6d6d6; border-radius:0;
+      background:#fff; color:#111; font:900 14px/1.3 system-ui,sans-serif;
+      letter-spacing:.07em; text-align:center; cursor:pointer;
+    }
+    #cxrso-big-announcement.is-visible { display:block; }
+    #cxrso-big-announcement:hover { background:#ededed; }
+    #cxrso-big-announcement:focus-visible { outline:3px solid #a00035; outline-offset:-3px; }
     @media (max-width: 520px) {
       #cxrso-updates-trigger { right: 13px; bottom: 13px; padding: 11px 14px; }
       #cxrso-updates-backdrop { padding: 10px; }
@@ -113,6 +122,17 @@
       return response.json();
     })
     .then(updates => {
+      const big = Array.isArray(updates) ? updates.find(update => update && update.bigAnnouncement === true) : null;
+      if (big && !document.getElementById("cxrso-big-announcement")) {
+        const banner = document.createElement("button");
+        banner.id = "cxrso-big-announcement";
+        banner.type = "button";
+        banner.className = "is-visible";
+        banner.textContent = "📢BIG ANNOUNCEMENT📢";
+        banner.setAttribute("aria-label", "Open the latest big announcement");
+        banner.addEventListener("click", () => { window.location.href = "/announcements.html"; });
+        document.body.insertBefore(banner, document.body.firstChild);
+      }
       list.replaceChildren();
       if (!Array.isArray(updates) || updates.length === 0) {
         list.innerHTML = '<div class="cxrso-updates-empty">No updates posted yet. Check back soon!</div>';
