@@ -46,7 +46,7 @@ function validSession(cookieHeader = "") {
   if (!entry) return false;
   const token = decodeURIComponent(entry.slice("cxrso_session=".length));
   const [expires, signature] = token.split(".");
-  if (!expires || !signature || !/^\\d+$/.test(expires)) return false;
+  if (!expires || !signature || !/^\d+$/.test(expires)) return false;
   if (Number(expires) < Math.floor(Date.now() / 1000)) return false;
   const expected = Buffer.from(sign(expires), "hex");
   let actual;
