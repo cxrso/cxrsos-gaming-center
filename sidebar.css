@@ -72,3 +72,26 @@ body.cxrso-sidebar-collapsed #cxrso-sidebar .cxrso-appearance{display:none}
   #cxrso-sidebar .cxrso-side-link{transition:none!important}
   #cxrso-sidebar .cxrso-side-link:hover{transform:none}
 }
+
+/* Game player mode — keep the play area clear and theme its title bar + controls. */
+body.cxrso-game-open #cxrso-sidebar,
+body.cxrso-game-open #cxrso-side-mobile{display:none!important}
+body.cxrso-game-open main{margin-left:auto!important}
+.zone-header{
+  background:linear-gradient(115deg,
+    color-mix(in srgb,var(--cxrso-side-accent,#e0002b) 72%,#09090d),
+    var(--cxrso-side-accent,#e0002b))!important;
+  color:#fff!important;
+  border-bottom:1px solid color-mix(in srgb,var(--cxrso-side-accent,#e0002b) 65%,#fff)!important;
+  box-shadow:0 8px 28px color-mix(in srgb,var(--cxrso-side-accent,#e0002b) 24%,transparent)!important;
+}
+.zone-header #zoneName,.zone-header #zoneAuthor,.zone-header .info-button,
+.zone-header .zone-controls button{color:#fff!important}
+.zone-header #zoneAuthor{opacity:.86}
+.zone-header .info-button,.zone-header .zone-controls button{
+  background:color-mix(in srgb,var(--cxrso-side-accent,#e0002b) 28%,#111)!important;
+  border:1px solid color-mix(in srgb,var(--cxrso-side-accent,#e0002b) 65%,#fff)!important;
+}
+.zone-header .info-button:hover,.zone-header .zone-controls button:hover{
+  background:color-mix(in srgb,var(--cxrso-side-accent,#e0002b) 48%,#111)!important;
+}
